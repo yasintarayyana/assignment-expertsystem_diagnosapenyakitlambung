@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {% block title %}
+        Sistem Pakar Lambung
+        {% endblock %}
+    </title>
+
+    <!-- Google Font -->
+    <link rel="preconnect"
+    href="https://fonts.googleapis.com">
+
+    <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+    <!-- Icons -->
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <!-- CSS -->
+    <link
+    rel="stylesheet"
+    href="{{ url_for('static',
+    filename='css/style.css') }}"
+    >
+
+</head>
+<body>
+
+<div class="wrapper">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                <i class="fa-solid fa-stomach"></i>
+            </div>
+
+            <div>
+                <h2>Sistem Pakar</h2>
+                <span>Penyakit Lambung</span>
+            </div>
+
+        </div>
+
+        <nav class="menu">
+
+            <a href="/dashboard"
+            class="menu-item active">
+
+                <i class="fa-solid fa-house"></i>
+                Dashboard
+            </a>
+
+            <a href="/diagnosa"
+            class="menu-item">
+
+                <i class="fa-solid fa-notes-medical"></i>
+                Diagnosa
+            </a>
+
+            <a href="/riwayat"
+            class="menu-item">
+
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                Riwayat Diagnosa
+            </a>
+
+            <a href="/profile"
+            class="menu-item">
+
+                <i class="fa-solid fa-user"></i>
+                Profil Saya
+            </a>
+
+        </nav>
+
+        <a href="/logout"
+        class="logout-btn">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Logout
+
+        </a>
+
+    </aside>
+
+
+    <!-- CONTENT -->
+    <main class="main-content">
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+</div>
+
+</body>
+</html>

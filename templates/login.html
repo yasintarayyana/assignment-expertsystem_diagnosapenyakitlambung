@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>Login</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static',
+    filename='css/style.css') }}">
+
+    <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+</head>
+<body class="auth-body">
+
+<div class="auth-container">
+
+    <div class="auth-left">
+
+        <h1>
+            Sistem Pakar
+            Penyakit Lambung
+        </h1>
+
+        <p>
+            Diagnosa penyakit lambung
+            menggunakan metode
+            Rule Based &
+            Forward Chaining
+        </p>
+
+    </div>
+
+
+    <div class="auth-card">
+
+        <h2>
+            Selamat Datang
+        </h2>
+
+        <p>
+            Login ke akun Anda
+        </p>
+
+        <form method="POST">
+
+            <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            required>
+
+            <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required>
+
+            <button type="submit">
+                Login
+            </button>
+
+        </form>
+
+        <div class="auth-link">
+
+            Belum punya akun?
+
+            <a href="/register">
+                Register
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
