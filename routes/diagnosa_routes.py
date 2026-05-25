@@ -1,19 +1,21 @@
 from flask import (
     Blueprint,
     render_template,
-    request
-)
-
-from flask_login import (
-    login_required,
-    current_user
+    request,
+    session,
+    redirect,
+    url_for
 )
 
 from data.gejala import GEJALA
-from rules.forward_chaining import forward_chaining
-from models.diagnosis_model import DiagnosisHistory
-from extensions import db
 
+from rules.forward_chaining import (
+    forward_chaining
+)
+
+from services.email_service import (
+    send_result_email
+)
 
 diagnosa = Blueprint(
     'diagnosa',
@@ -21,60 +23,164 @@ diagnosa = Blueprint(
 )
 
 
+# ======================
+# LANDING PAGE
+# ======================
+
+@diagnosa.route('/')
+def landing():
+
+    return render_template(
+        'landing.html'
+    )
+
+
+# ======================
+# QUIZ
+# ======================
+
 @diagnosa.route(
-    '/diagnosa',
+    '/quiz',
     methods=['GET', 'POST']
 )
-@login_required
-def diagnosa_page():
-
-    hasil = None
+def quiz():
 
     if request.method == 'POST':
 
-        selected_gejala = request.form.getlist(
-            'gejala'
-        )
+        selected_gejala = {}
 
-        hasil = forward_chaining(
-            selected_gejala
-        )
+        for kode in (
+            GEJALA.keys()
+        ):
 
-        if hasil:
+            nilai = request.form.get(
+                kode
+            )
 
-            nama_gejala = []
+            if nilai:
 
-            for kode in selected_gejala:
-                nama_gejala.append(
-                    GEJALA[kode]
+                cf_user = float(
+                    nilai
                 )
 
-            riwayat = DiagnosisHistory(
-                user_id=current_user.id,
+                if cf_user > 0:
 
-                disease_name=
-                hasil["nama"],
+                    selected_gejala[
+                        kode
+                    ] = cf_user
 
-                symptoms=
-                ", ".join(
-                    nama_gejala
-                ),
+        session[
+            'selected_gejala'
+        ] = selected_gejala
 
-                description=
-                hasil["deskripsi"],
-
-                similarity=
-                hasil["persentase"]
+        return redirect(
+            url_for(
+                'diagnosa.user_info'
             )
-
-            db.session.add(
-                riwayat
-            )
-
-            db.session.commit()
+        )
 
     return render_template(
-        'diagnosa.html',
-        gejala=GEJALA,
-        hasil=hasil
+        'quiz.html',
+        gejala=GEJALA
+    )
+
+
+# ======================
+# USER INFO
+# ======================
+
+@diagnosa.route(
+    '/user-info',
+    methods=['GET', 'POST']
+)
+def user_info():
+
+    if request.method == 'POST':
+
+        nama = request.form.get(
+            'nama'
+        )
+
+        email = request.form.get(
+            'email'
+        )
+
+        session[
+            'nama'
+        ] = nama
+
+        session[
+            'email'
+        ] = email
+
+        return redirect(
+            url_for(
+                'diagnosa.loading'
+            )
+        )
+
+    return render_template(
+        'user_info.html'
+    )
+
+
+# ======================
+# LOADING PAGE
+# ======================
+
+@diagnosa.route(
+    '/loading'
+)
+def loading():
+
+    return render_template(
+        'loading.html'
+    )
+
+
+# ======================
+# RESULT
+# ======================
+
+@diagnosa.route(
+    '/result'
+)
+def result():
+
+    selected_gejala = session.get(
+        'selected_gejala',
+        {}
+    )
+
+    nama = session.get(
+        'nama'
+    )
+
+    email = session.get(
+        'email'
+    )
+
+    hasil = (
+        forward_chaining(
+            selected_gejala
+        )
+    )
+
+    if email:
+
+        send_result_email(
+            nama,
+            email,
+            hasil
+        )
+
+    return render_template(
+
+        'result.html',
+
+        hasil=hasil,
+
+        nama=nama,
+
+        email=email
     )

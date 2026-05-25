@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Sistem Pakar Diagnosa Lambung
+    </title>
+
+    <link rel="stylesheet"
+    href="{{ url_for(
+        'static',
+        filename='css/style.css'
+    ) }}">
+
+</head>
+
+<body class="landing-body">
+
+<!-- HEADER -->
+
+<header class="main-header">
+
+    <div class="logo">
+
+        SISTEM PAKAR DIAGNOSA LAMBUNG
+
+    </div>
+
+
+    <div class="header-right">
+
+        <!-- CTA -->
+
+        <a
+        href="/quiz"
+        class="header-start-btn">
+
+            Mulai Tes Gratis
+
+        </a>
+
+    </div>
+
+</header>
+
+<!-- HERO -->
+
+<section class="landing-hero">
+
+    <div class="hero-left">
+
+        <span class="hero-badge">
+
+            Sistem Pakar Kesehatan Lambung
+
+        </span>
+
+        <h1>
+
+            Diagnosa Awal
+            Kondisi Lambung
+            Berdasarkan
+            Gejala Anda
+
+        </h1>
+
+        <p>
+
+            Cari tahu kemungkinan
+            kondisi lambung yang
+            Anda alami dengan jawab
+            beberapa pertanyaan sederhana
+            dan menggunakan metode
+            <strong>
+                Forward Chaining
+            </strong>
+            dan
+            <strong>
+                Certainty Factor
+            </strong>
+            hanya dalam beberapa
+            menit.
+
+        </p>
+
+        <a
+        href="/quiz"
+        class="hero-btn">
+
+            Mulai Tes Gratis
+
+        </a>
+
+    </div>
+
+
+<div class="hero-right">
+    <img src="{{ url_for('static', filename='img/lambung.png') }}" alt="Ilustrasi Lambung">
+</div>
+
+</section>
+
+
+
+<!-- WHY TEST -->
+
+<section class="feature-section">
+
+    <div class="section-title">
+
+        <h2>
+
+            Kenapa
+            Menggunakan
+            Tes Ini?
+
+        </h2>
+
+        <p>
+
+            Sistem ini membantu
+            analisis awal kondisi
+            lambung secara cepat
+            dan praktis.
+
+        </p>
+
+    </div>
+
+
+    <div class="feature-grid">
+
+        <div class="feature-card">
+
+            <div class="icon">
+                🧠
+            </div>
+
+            <h3>
+                Sistem Pakar
+            </h3>
+
+            <p>
+                Menggunakan basis
+                pengetahuan dari
+                gejala penyakit
+                lambung.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="icon">
+                📊
+            </div>
+
+            <h3>
+                Persentase Analisis
+            </h3>
+
+            <p>
+                Menampilkan tingkat
+                kemungkinan penyakit
+                berdasarkan gejala.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="icon">
+                📧
+            </div>
+
+            <h3>
+                Hasil via Email
+            </h3>
+
+            <p>
+                Hasil diagnosa akan
+                otomatis dikirim ke
+                email Anda.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="icon">
+                ⚡
+            </div>
+
+            <h3>
+                Cepat & Mudah
+            </h3>
+
+            <p>
+                Proses diagnosa
+                hanya memerlukan
+                waktu sekitar
+                2–3 menit.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- HOW IT WORKS -->
+
+<section class="steps-section">
+
+    <div class="section-title">
+
+        <h2>
+
+            Cara Kerja
+            Diagnosa
+
+        </h2>
+
+    </div>
+
+    <div class="step-grid">
+
+        <div class="step-card">
+
+            <span>
+                1
+            </span>
+
+            <h3>
+                Isi Gejala
+            </h3>
+
+            <p>
+                Jawab pertanyaan
+                sesuai kondisi
+                yang dirasakan.
+            </p>
+
+        </div>
+
+
+        <div class="step-card">
+
+            <span>
+                2
+            </span>
+
+            <h3>
+                Isi Data Diri
+            </h3>
+
+            <p>
+                Masukkan nama
+                dan email untuk
+                menerima hasil.
+            </p>
+
+        </div>
+
+
+        <div class="step-card">
+
+            <span>
+                3
+            </span>
+
+            <h3>
+                Lihat Hasil
+            </h3>
+
+            <p>
+                Sistem akan
+                menganalisis
+                kemungkinan
+                penyakit lambung.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- DISCLAIMER -->
+
+<section class="disclaimer-section">
+
+    <h3>
+        Informasi Penting
+    </h3>
+
+    <p>
+
+        Hasil yang diberikan
+        merupakan analisis awal
+        berdasarkan gejala yang
+        dipilih dan
+        <strong>
+            bukan pengganti
+            diagnosis dokter.
+        </strong>
+
+    </p>
+
+</section>
+
+<script src="{{ url_for('static', filename='js/landing.js') }}"></script>
+
+
+</body>
+</html>

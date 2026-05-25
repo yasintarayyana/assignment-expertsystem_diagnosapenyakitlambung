@@ -1,11 +1,34 @@
-import os
-
-
 class Config:
-    SECRET_KEY = 'secretkeylambung123'
 
-    BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+    SECRET_KEY = (
+        'sistem-pakar-lambung'
+    )
 
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'database.db')
+    SQLALCHEMY_DATABASE_URI = (
+        'sqlite:///database.db'
+    )
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+
+    # EMAIL CONFIG
+
+    MAIL_SERVER = (
+        'smtp.gmail.com'
+    )
+
+    MAIL_PORT = 587
+
+    MAIL_USE_TLS = True
+
+    MAIL_USERNAME = (
+        'projectsistempakarlambung@gmail.com'
+    )
+
+    MAIL_PASSWORD = (
+        'xttrgwygkqgwhgfq'
+    )
+
+    MAIL_DEFAULT_SENDER = (
+        'projectsistempakarlambung@gmail.com'
+    )

@@ -1,0 +1,295 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="result-container">
+
+    <!-- HEADER -->
+
+    <div class="result-header">
+
+        <h1>
+            Halo, {{ nama }}
+        </h1>
+
+        <p>
+            Berdasarkan gejala yang Anda pilih,
+            sistem memperkirakan kemungkinan
+            penyakit lambung Anda adalah:
+        </p>
+
+    </div>
+
+
+    <!-- HASIL UTAMA -->
+
+    <div class="result-card">
+
+        <h2>
+            {{ hasil.nama }}
+        </h2>
+
+        <div class="percentage-circle">
+            {{ hasil.persentase }}%
+        </div>
+
+        <p>
+            {{ hasil.deskripsi }}
+        </p>
+
+    </div>
+
+<!-- QUICK INFO -->
+
+<div class="quick-info-card">
+
+    <div
+    class="quick-item">
+
+        <div
+        class="icon-box">
+
+            📩
+
+        </div>
+
+        <div>
+
+            <h4>
+
+                Hasil Telah
+                Dikirim
+
+            </h4>
+
+            <p>
+
+                Hasil diagnosa
+                sudah dikirim ke:
+
+                <strong>
+
+                    {{ email }}
+
+                </strong>
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div
+    class="quick-item">
+
+        <div
+        class="icon-box">
+
+            🩺
+
+        </div>
+
+        <div>
+
+            <h4>
+
+                Konsultasi Dokter
+
+            </h4>
+
+            <p>
+
+                Jika gejala
+                semakin berat
+                atau berlangsung
+                lama, segera
+                konsultasikan
+                ke dokter.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+    <!-- ALASAN SISTEM -->
+
+    <div class="section-box">
+
+        <h2>
+            Mengapa 
+            {{ hasil.nama }}?
+        </h2>
+
+        {% for item in hasil.reasoning %}
+
+            {% if item.penyakit == hasil.nama %}
+
+            <table class="cf-table">
+
+                <thead>
+
+                    <tr>
+                        <th>Gejala</th>
+                        <th>CF Pakar</th>
+                        <th>CF User</th>
+                        <th>Hasil CF</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for g in item.gejala %}
+
+                    <tr>
+
+                        <td>
+                            {{ g.nama }}
+                        </td>
+
+                        <td>
+                            {{ (g.cf_pakar * 100)|round(1) }}%
+                        </td>
+
+                        <td>
+                            {{ (g.cf_user * 100)|round(1) }}%
+                        </td>
+
+                        <td>
+                            {{ (g.hasil_cf * 100)|round(1) }}%
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+
+            <div class="cf-total">
+
+                <strong>
+                    Kemungkinan Penyakit {{ item.penyakit }} :
+                    {{ item.persentase }}%
+                </strong>
+
+            </div>
+
+            <small>
+
+                Persentase ini diperoleh dari
+                kombinasi seluruh gejala yang
+                dipilih menggunakan metode
+                Certainty Factor.
+
+            </small>
+
+            {% endif %}
+
+        {% endfor %}
+
+    </div>
+
+
+    <!-- RANKING PENYAKIT -->
+
+    <div class="section-box">
+
+        <h2>
+            Kemungkinan Penyakit Lain
+        </h2>
+
+        {% for item in hasil.matched_rules %}
+
+        <div class="disease-rank">
+
+            <span>
+                {{ item.penyakit }}
+            </span>
+
+            <strong>
+                {{ item.persen }}%
+            </strong>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    <!-- REKOMENDASI -->
+
+    <div class="section-box">
+
+        <h2>
+            Rekomendasi
+        </h2>
+
+        <ul>
+
+            {% for saran in hasil.solusi %}
+
+            <li>
+                {{ saran }}
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+    </div>
+
+
+    <!-- PANTANGAN -->
+
+    <div class="section-box">
+
+        <h2>
+            Pantangan
+        </h2>
+
+        <ul>
+
+            {% for item in hasil.pantangan %}
+
+            <li>
+                {{ item }}
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+    </div>
+
+</div>
+
+<div class="back-home-wrap">
+
+    <a
+    href="/"
+    class="restart-btn">
+
+        <span
+        class="btn-icon">
+
+            ↺
+
+        </span>
+
+        Mulai Tes Lagi
+
+    </a>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/result.js') }}"></script>
+
+{% endblock %}

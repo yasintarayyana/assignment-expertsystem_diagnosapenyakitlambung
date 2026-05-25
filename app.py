@@ -1,13 +1,15 @@
-from flask import (
-    Flask,
-    redirect,
-    url_for
-)
+from flask import Flask
 
 from config import Config
+from extensions import db
+
+from routes.diagnosa_routes import (
+    diagnosa
+)
+
 from extensions import (
     db,
-    login_manager
+    mail
 )
 
 
@@ -20,42 +22,15 @@ def create_app():
     )
 
     db.init_app(app)
-
-    login_manager.init_app(app)
-
-    login_manager.login_view = (
-        'auth.login'
+    
+    mail.init_app(app)
+    
+    app.register_blueprint(
+        diagnosa
     )
 
-    from models.user_model import User
-    from models.diagnosis_model import DiagnosisHistory
-
-    @login_manager.user_loader
-    def load_user(user_id):
-
-        return User.query.get(
-            int(user_id)
-        )
-
-    from routes.auth_routes import auth
-    from routes.dashboard_routes import dashboard
-    from routes.diagnosa_routes import diagnosa
-
-    app.register_blueprint(auth)
-    app.register_blueprint(dashboard)
-    app.register_blueprint(diagnosa)
-
-    # HOME REDIRECT
-    @app.route('/')
-    def home():
-
-        return redirect(
-            url_for(
-                'auth.login'
-            )
-        )
-
     with app.app_context():
+
         db.create_all()
 
     return app
@@ -63,5 +38,9 @@ def create_app():
 
 app = create_app()
 
-if __name__ == '__main__':
-    app.run(debug=True)
+
+if __name__ == "__main__":
+
+    app.run(
+        debug=True
+    )

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="loading-wrapper">
+
+    <div class="loading-card">
+
+        <div class="spinner"></div>
+
+        <h1>
+            Sedang
+            Menganalisis
+            Gejala Anda...
+        </h1>
+
+        <div class="loading-bar">
+
+            <div
+            class="loading-fill">
+
+            </div>
+
+        </div>
+
+        <p>
+            Mohon tunggu...
+        </p>
+
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/loading.js') }}"></script>
+
+{% endblock %}

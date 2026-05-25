@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="quiz-wrapper">
+
+    <div class="quiz-top">
+
+        <h1>
+
+            Tes Gejala
+            Penyakit Lambung
+
+        </h1>
+
+        <p>
+
+            Pilih tingkat
+            keyakinan terhadap
+            gejala yang Anda alami
+
+        </p>
+
+    </div>
+
+
+    <form
+    method="POST"
+    action="/quiz">
+
+    {% for kode,
+    nama in gejala.items() %}
+
+    <div
+    class="question-card">
+
+        <div
+        class="question-title">
+
+            {{ loop.index }}.
+
+            {{ nama }}
+
+        </div>
+
+        <div
+        class="answer-group">
+
+            <label
+            class="answer-item">
+
+                <input
+                type="radio"
+
+                name="{{ kode }}"
+
+                value="0"
+
+                checked>
+
+                <span>
+
+                    Tidak
+
+                </span>
+
+            </label>
+
+
+            <label
+            class="answer-item">
+
+                <input
+                type="radio"
+
+                name="{{ kode }}"
+
+                value="0.4">
+
+                <span>
+
+                    Sedikit
+
+                </span>
+
+            </label>
+
+
+            <label
+            class="answer-item">
+
+                <input
+                type="radio"
+
+                name="{{ kode }}"
+
+                value="0.6">
+
+                <span>
+
+                    Cukup
+
+                </span>
+
+            </label>
+
+
+            <label
+            class="answer-item">
+
+                <input
+                type="radio"
+
+                name="{{ kode }}"
+
+                value="0.8">
+
+                <span>
+
+                    Yakin
+
+                </span>
+
+            </label>
+
+
+            <label
+            class="answer-item">
+
+                <input
+                type="radio"
+
+                name="{{ kode }}"
+
+                value="1.0">
+
+                <span>
+
+                    Sangat
+                    Yakin
+
+                </span>
+
+            </label>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+
+    <button
+    class="quiz-btn"
+    type="submit">
+
+        Lanjutkan
+
+    </button>
+
+    </form>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/quiz.js') }}"></script>
+
+{% endblock %}
