@@ -99,3 +99,54 @@ SISTEM PAKAR LAMBUNG
     )
 
     mail.send(msg)
+    
+# ==========================
+# EMAIL OTP VERIFICATION
+# ==========================
+
+def send_otp_email(
+    email,
+    otp
+):
+
+    msg = Message(
+
+        subject=
+        "Kode Verifikasi Akun",
+
+        recipients=[
+            email
+        ],
+
+        body=f"""
+Halo,
+
+Berikut kode OTP verifikasi akun Anda:
+
+━━━━━━━━━━━━━━━━━━
+
+KODE OTP:
+{otp}
+
+━━━━━━━━━━━━━━━━━━
+
+Jangan bagikan kode ini
+kepada siapa pun.
+
+Jika Anda tidak merasa
+melakukan pendaftaran,
+abaikan email ini.
+
+Terima kasih,
+SISTEM PAKAR LAMBUNG
+""",
+
+        sender=(
+
+            "SISTEM PAKAR LAMBUNG",
+
+            "projectsistempakarlambung@gmail.com"
+        )
+    )
+
+    mail.send(msg)

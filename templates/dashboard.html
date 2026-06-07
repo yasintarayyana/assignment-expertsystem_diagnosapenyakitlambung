@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="result-container">
+
+    <div class="result-header">
+
+        <h1>
+            Halo,
+            {{ user.nama }}
+            👋
+        </h1>
+
+        <p>
+            Selamat datang kembali
+        </p>
+
+    </div>
+
+    <!-- QUICK INFO -->
+    <div class="quick-info-card">
+
+        <div class="quick-item">
+
+            <div class="icon-box">
+                🩺
+            </div>
+
+            <div>
+
+                <h4>
+                    Total Diagnosa
+                </h4>
+
+                <p>
+                    {{
+                    total_diagnosa
+                    }}
+                    kali
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="quick-item">
+
+            <div class="icon-box">
+                👤
+            </div>
+
+            <div>
+
+                <h4>
+                    Riwayat Penyakit
+                </h4>
+
+                <p>
+                    {{
+                    user
+                    .riwayat_penyakit
+                    or
+                    "Tidak ada"
+                    }}
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- LAST DIAGNOSA -->
+    {% if last_history %}
+
+    <div class="result-card">
+
+        <h2>
+            Diagnosa Terakhir
+        </h2>
+
+        <div
+        class="percentage-circle">
+
+            {{
+            "%.1f"|format(
+            last_history
+            .persentase
+            )
+            }}%
+
+        </div>
+
+        <h3>
+            {{
+            last_history
+            .penyakit
+            }}
+        </h3>
+
+        <p>
+
+            {{
+            last_history
+            .created_at
+            .strftime(
+            "%d %B %Y"
+            )
+            }}
+
+        </p>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

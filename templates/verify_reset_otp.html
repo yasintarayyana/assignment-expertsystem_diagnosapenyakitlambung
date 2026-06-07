@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}
+Verifikasi OTP
+{% endblock %}
+
+{% block content %}
+
+<div class="auth-wrapper">
+
+    <div class="auth-card otp-card">
+
+        <div class="otp-icon">
+            🔐
+        </div>
+
+        <h1>
+            Verifikasi OTP
+        </h1>
+
+        <p>
+            Masukkan kode OTP reset password
+        </p>
+
+        <form method="POST">
+
+            <input
+                type="text"
+                name="otp"
+                maxlength="6"
+                placeholder="Masukkan OTP"
+                required
+            >
+
+            <button type="submit">
+                Verifikasi
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}
+Verifikasi OTP
+{% endblock %}
+
+{% block content %}
+
+<div class="auth-wrapper">
+
+    <div class="auth-card otp-card">
+
+        <div class="otp-icon">
+            ✉️
+        </div>
+
+        <h1>
+            Verifikasi Email
+        </h1>
+
+        <p>
+            Masukkan kode OTP yang telah dikirim ke email Anda
+        </p>
+
+        <form
+            method="POST"
+            action="{{ url_for('auth.verify') }}"
+        >
+
+            <input
+                type="text"
+                name="otp"
+                placeholder="Masukkan 6 Digit OTP"
+                maxlength="6"
+                required
+            >
+
+            <button type="submit">
+                Verifikasi
+            </button>
+
+        </form>
+
+        <div class="auth-links center-link">
+
+            <a
+                href="{{ url_for('auth.login') }}"
+            >
+                Kembali ke Login
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

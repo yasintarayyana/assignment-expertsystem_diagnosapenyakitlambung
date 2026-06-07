@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block title %}
+Register
+{% endblock %}
+
+{% block content %}
+
+<div class="auth-wrapper">
+
+    <div class="auth-card">
+
+        <h1>Register</h1>
+
+        <p>
+            Buat akun terlebih dahulu
+        </p>
+
+        <form
+            method="POST"
+            action="{{ url_for('auth.register') }}"
+        >
+
+            <!-- NAMA -->
+            <input
+                type="text"
+                name="nama"
+                placeholder="Nama Lengkap"
+                required
+            >
+
+            <!-- TANGGAL LAHIR -->
+            <label>
+                Tanggal Lahir
+            </label>
+
+            <input
+                type="date"
+                id="tanggal_lahir"
+                name="tanggal_lahir"
+                required
+            >
+
+            <!-- UMUR AUTO -->
+            <input
+                type="number"
+                id="umur"
+                placeholder="Umur"
+                readonly
+            >
+
+            <!-- JENIS KELAMIN -->
+            <select
+                name="jenis_kelamin"
+                required
+            >
+
+                <option value="">
+                    Pilih Jenis Kelamin
+                </option>
+
+                <option value="Laki-laki">
+                    Laki-laki
+                </option>
+
+                <option value="Perempuan">
+                    Perempuan
+                </option>
+
+            </select>
+
+            <!-- RIWAYAT PENYAKIT -->
+            <textarea
+                name="riwayat_penyakit"
+                placeholder="Riwayat penyakit (opsional)"
+            ></textarea>
+
+            <!-- EMAIL -->
+            <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                required
+            >
+
+            <!-- PASSWORD -->
+            <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                required
+            >
+
+            <button type="submit">
+                Register
+            </button>
+
+        </form>
+
+        <div class="auth-links">
+
+            <a
+                href="{{ url_for('auth.login') }}"
+            >
+                Sudah punya akun?
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- HITUNG UMUR OTOMATIS -->
+<script>
+
+document
+.getElementById(
+    "tanggal_lahir"
+)
+.addEventListener(
+    "change",
+    function(){
+
+        const birthDate =
+        new Date(
+            this.value
+        )
+
+        const today =
+        new Date()
+
+        let age =
+            today.getFullYear()
+            -
+            birthDate.getFullYear()
+
+        const monthDiff =
+            today.getMonth()
+            -
+            birthDate.getMonth()
+
+        if(
+            monthDiff < 0
+            ||
+            (
+                monthDiff === 0
+                &&
+                today.getDate()
+                <
+                birthDate.getDate()
+            )
+        ){
+            age--
+        }
+
+        document
+        .getElementById(
+            "umur"
+        )
+        .value = age
+    }
+)
+
+</script>
+
+{% endblock %}

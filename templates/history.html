@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}
+Riwayat Diagnosa
+{% endblock %}
+
+{% block content %}
+
+<div class="result-container">
+
+    <div class="result-header">
+
+        <h1>
+            Riwayat Diagnosa
+        </h1>
+
+        <p>
+            Histori hasil pemeriksaan Anda
+        </p>
+
+    </div>
+
+    <div class="section-box">
+
+        <table class="cf-table">
+
+            <thead>
+
+                <tr>
+                    <th>No</th>
+                    <th>Tanggal</th>
+                    <th>Penyakit</th>
+                    <th>Persentase</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for item
+                in histories %}
+
+                <tr>
+
+                    <td>
+                        {{ loop.index }}
+                    </td>
+
+                    <td>
+                        {{
+                        item.created_at
+                        .strftime(
+                        "%d-%m-%Y %H:%M"
+                        )
+                        }}
+                    </td>
+
+                    <td>
+                        {{
+                        item.penyakit
+                        }}
+                    </td>
+
+                    <td>
+                        {{
+                        "%.2f"|format(
+                        item.persentase
+                        )
+                        }}%
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

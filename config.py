@@ -1,11 +1,13 @@
+import os
+
 class Config:
 
     SECRET_KEY = (
-        'sistem-pakar-lambung'
+        "sistem-pakar-lambung"
     )
 
     SQLALCHEMY_DATABASE_URI = (
-        'sqlite:///database.db'
+        'sqlite:///user.db'
     )
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False

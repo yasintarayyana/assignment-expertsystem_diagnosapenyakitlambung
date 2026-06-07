@@ -290,6 +290,25 @@
 
 </div>
 
+<div class="back-home-wrap">
+
+    <a
+        href="{{ url_for(
+            'diagnosa.download_pdf'
+        ) }}"
+        class="restart-btn"
+    >
+
+        <span class="btn-icon">
+            📄
+        </span>
+
+        Download Hasil PDF
+
+    </a>
+
+</div>
+
 <script src="{{ url_for('static', filename='js/result.js') }}"></script>
 
 {% endblock %}
