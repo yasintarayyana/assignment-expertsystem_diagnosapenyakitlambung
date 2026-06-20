@@ -59,6 +59,50 @@ def landing():
 
 
 # ======================
+# GUIDELINES
+# ======================
+
+@diagnosa.route("/guidelines")
+def guidelines():
+
+    if not session.get(
+        "user_id"
+    ):
+
+        return redirect(
+            url_for(
+                "auth.login"
+            )
+        )
+
+    return render_template(
+        "guidelines.html"
+    )
+    
+
+# ======================
+# TEST PROFILE
+# ======================
+
+@diagnosa.route("/test-profile")
+def test_profile():
+
+    if not session.get("user_id"):
+        return redirect(
+            url_for("auth.login")
+        )
+
+    user = User.query.get(
+        session["user_id"]
+    )
+
+    return render_template(
+        "test_profile.html",
+        user=user
+    )
+    
+    
+# ======================
 # QUIZ
 # ======================
 
@@ -185,11 +229,10 @@ def result():
     )
     
     # ambil penyakit tertinggi
-    penyakit_utama = max(
-        hasil,
-        key=lambda x:
-        x["persentase"]
-    )
+    penyakit_utama = {
+        "penyakit": hasil["nama"],
+        "persentase": hasil["persentase"]
+    }
 
     # simpan histori
     history = DiagnosisHistory(

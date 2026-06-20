@@ -11,6 +11,8 @@ from flask import (
 from datetime import datetime
 import random
 
+from streamlit import user
+
 from models.user_model import User
 from extensions import db
 
@@ -565,4 +567,78 @@ def reset_password():
 
     return render_template(
         "reset_password.html"
+    )
+    
+    
+# ==========================
+# PROFILE
+# ==========================
+
+@auth.route("/profile")
+def profile():
+
+    if not session.get("user_id"):
+        return redirect(
+            url_for("auth.login")
+        )
+
+    user = User.query.get(
+        session["user_id"]
+    )
+
+    return render_template(
+        "profile.html",
+        user=user
+    )
+    
+# ==========================
+# EDIT PROFILE
+# ==========================
+
+@auth.route(
+    "/profile/edit",
+    methods=["GET", "POST"]
+)
+def edit_profile():
+
+    if not session.get("user_id"):
+
+        return redirect(
+            url_for("auth.login")
+        )
+
+    user = User.query.get(
+        session["user_id"]
+    )
+
+    if request.method == "POST":
+        user.nama = request.form.get("nama")
+
+        user.email = request.form.get("email")
+
+        tanggal_lahir = request.form.get("tanggal_lahir")
+
+        user.tanggal_lahir = datetime.strptime(tanggal_lahir, "%Y-%m-%d")
+
+        today = datetime.today()
+
+        user.umur = (
+            today.year
+            - user.tanggal_lahir.year
+            - ((today.month, today.day) < (user.tanggal_lahir.month, user.tanggal_lahir.day))
+        )
+
+        user.jenis_kelamin = request.form.get("jenis_kelamin")
+
+        user.riwayat_penyakit = request.form.get("riwayat_penyakit")
+
+        db.session.commit()
+
+        flash("Profil berhasil diperbarui", "success")
+
+        return redirect(url_for("auth.profile"))
+
+    return render_template(
+        "edit_profile.html",
+        user=user
     )

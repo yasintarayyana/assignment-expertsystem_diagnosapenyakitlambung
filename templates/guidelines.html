@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+
+{% block title %}
+Panduan Penggunaan
+{% endblock %}
+
+{% block content %}
+
+<div class="guidelines-container">
+
+    <!-- STEPPER -->
+
+    <div class="stepper">
+
+        <div class="step active">
+            <div class="step-circle">1</div>
+            <span>Panduan</span>
+        </div>
+
+        <div class="step-line"></div>
+
+        <div class="step">
+            <div class="step-circle">2</div>
+            <span>Data Diri</span>
+        </div>
+
+        <div class="step-line"></div>
+
+        <div class="step">
+            <div class="step-circle">3</div>
+            <span>Diagnosa</span>
+        </div>
+
+        <div class="step-line"></div>
+
+        <div class="step">
+            <div class="step-circle">4</div>
+            <span>Hasil</span>
+        </div>
+
+    </div>
+
+    <!-- CARD -->
+
+    <div class="guidelines-card">
+
+        <h1>
+            🩺 Panduan Penggunaan
+        </h1>
+
+        <p class="intro-text">
+
+            Selamat datang di Sistem Diagnosa Awal Penyakit Lambung.
+
+            Sistem ini membantu Anda melakukan skrining awal berdasarkan gejala yang Anda alami.
+
+            Hasil yang ditampilkan merupakan perkiraan awal dan tidak menggantikan diagnosis dari dokter atau tenaga medis.
+
+        </p>
+
+        <div class="section-title">
+            📌 Sebelum Memulai
+        </div>
+
+        <div class="guide-list">
+
+            <div class="guide-item">
+                <h4>👤 Isi Data Diri dengan Benar</h4>
+                <p>
+                    Pastikan data yang Anda masukkan adalah data diri Anda sendiri agar hasil diagnosa dapat tersimpan dengan benar.
+                </p>
+            </div>
+
+            <div class="guide-item">
+                <h4>✅ Jawab Sesuai Kondisi Anda</h4>
+                <p>
+                    Pilih jawaban yang paling sesuai dengan gejala yang sedang atau sering Anda alami.
+                </p>
+            </div>
+
+            <div class="guide-item">
+                <h4>📋 Jawab Semua Pertanyaan</h4>
+                <p>
+                    Pastikan seluruh pertanyaan dijawab agar sistem dapat memberikan hasil diagnosa yang optimal.
+                </p>
+            </div>
+
+            <div class="guide-item">
+                <h4>⏱️ Kerjakan dengan Tenang</h4>
+                <p>
+                    Luangkan waktu beberapa menit untuk menjawab setiap pertanyaan dengan teliti.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="warning-box">
+
+            <h3>
+                ⚠️ Penting!
+            </h3>
+
+            <p>
+                Hasil dari sistem ini bukan diagnosis medis dan hanya digunakan sebagai informasi atau skrining awal.
+            </p>
+
+            <ul>
+                <li>Nyeri lambung yang sangat hebat</li>
+                <li>Muntah darah</li>
+                <li>BAB berwarna hitam</li>
+                <li>Penurunan berat badan tanpa sebab yang jelas</li>
+                <li>Kesulitan menelan</li>
+            </ul>
+
+            <p>
+                Segera periksakan diri ke dokter atau fasilitas kesehatan terdekat.
+            </p>
+
+        </div>
+
+        <div class="privacy-box">
+
+            <h3>
+                🔒 Privasi Data
+            </h3>
+
+            <p>
+                Data yang Anda masukkan hanya digunakan untuk keperluan proses diagnosa dan penyimpanan hasil pada sistem.
+            </p>
+
+        </div>
+
+        <div class="confirmation-box">
+
+            <label class="checkbox-label">
+
+                <input
+                    type="checkbox"
+                    id="confirmGuide">
+
+                Saya telah membaca dan memahami seluruh panduan penggunaan sistem.
+
+            </label>
+
+        </div>
+
+        <div class="guide-actions">
+
+            <a
+                href="#"
+                id="nextBtn"
+                class="next-btn disabled">
+
+                Lanjut ke Pengisian Data Diri →
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const checkbox =
+document.getElementById(
+    "confirmGuide"
+);
+
+const nextBtn =
+document.getElementById(
+    "nextBtn"
+);
+
+checkbox.addEventListener(
+    "change",
+    function(){
+
+        if(this.checked){
+
+            nextBtn.classList.remove(
+                "disabled"
+            );
+
+            nextBtn.href =
+            "{{ url_for('diagnosa.test_profile') }}";
+
+        }else{
+
+            nextBtn.classList.add(
+                "disabled"
+            );
+
+            nextBtn.href = "#";
+        }
+    }
+);
+
+</script>
+
+{% endblock %}

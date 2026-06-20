@@ -32,26 +32,14 @@
         <div class="logo">
             SISTEM PAKAR LAMBUNG
         </div>
+        
+        <div class="header-actions">
 
-        <div class="header-right">
+            {% if user %}
 
-            {% if session.get('user_id') %}
-
-                <span class="user-name">
-                    Halo, {{ session.get('nama') }}
+                <span>
+                    Halo, {{ user.nama }}
                 </span>
-
-                <a
-                    href="{{ url_for('diagnosa.dashboard') }}"
-                    class="header-btn">
-                    Dashboard
-                </a>
-
-                <a
-                    href="{{ url_for('diagnosa.history') }}"
-                    class="header-btn">
-                    Riwayat
-                </a>
 
                 <a
                     href="{{ url_for('auth.logout') }}"

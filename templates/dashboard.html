@@ -6,119 +6,183 @@ Dashboard
 
 {% block content %}
 
-<div class="result-container">
+<div class="dashboard-layout">
 
-    <div class="result-header">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
 
-        <h1>
-            Halo,
-            {{ user.nama }}
-            👋
-        </h1>
+        <div class="sidebar-user">
 
-        <p>
-            Selamat datang kembali
-        </p>
-
-    </div>
-
-    <!-- QUICK INFO -->
-    <div class="quick-info-card">
-
-        <div class="quick-item">
-
-            <div class="icon-box">
-                🩺
-            </div>
-
-            <div>
-
-                <h4>
-                    Total Diagnosa
-                </h4>
-
-                <p>
-                    {{
-                    total_diagnosa
-                    }}
-                    kali
-                </p>
-
-            </div>
-
-        </div>
-
-        <div class="quick-item">
-
-            <div class="icon-box">
+            <div class="avatar">
                 👤
             </div>
 
-            <div>
+            <h3>{{ user.nama }}</h3>
 
-                <h4>
-                    Riwayat Penyakit
-                </h4>
+            <p>
+                Pengguna
+            </p>
+
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <a href="{{ url_for('diagnosa.dashboard') }}"
+               class="active">
+                🏠 Dashboard
+            </a>
+
+            <a href="{{ url_for('auth.profile') }}">
+                👤 Profil
+            </a>
+
+            <a href="{{ url_for('diagnosa.history') }}">
+                📋 Riwayat
+            </a>
+
+            <a href="{{ url_for('diagnosa.guidelines') }}">
+                🩺 Mulai Tes
+            </a>
+
+        </nav>
+
+        <a href="{{ url_for('auth.logout') }}"
+           class="logout-btn">
+            🚪 Logout
+        </a>
+
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="dashboard-content">
+
+        <div class="welcome-section">
+
+            <h1>
+                Halo, {{ user.nama }} 👋
+            </h1>
+
+            <p>
+                Selamat datang kembali
+            </p>
+
+        </div>
+
+        <div class="dashboard-grid">
+
+            <!-- TOTAL DIAGNOSA -->
+            <div class="dashboard-card">
+
+                <div class="card-icon">
+                    🩺
+                </div>
+
+                <h3>Total Diagnosa</h3>
+
+                <h2>
+                    {{ total_diagnosa }}
+                </h2>
 
                 <p>
-                    {{
-                    user
-                    .riwayat_penyakit
-                    or
-                    "Tidak ada"
-                    }}
+                    Pemeriksaan yang telah dilakukan
                 </p>
+
+            </div>
+
+            <!-- RIWAYAT -->
+            <div class="dashboard-card">
+
+                <div class="card-icon">
+                    📋
+                </div>
+
+                <h3>Riwayat Penyakit</h3>
+
+                <h2>
+                    {{ user.riwayat_penyakit or "Tidak ada" }}
+                </h2>
+
+                <p>
+                    Data riwayat pengguna
+                </p>
+
+            </div>
+
+            <!-- HASIL TERAKHIR -->
+            {% if last_history %}
+
+            <div class="dashboard-card">
+
+                <div class="card-icon">
+                    📊
+                </div>
+
+                <h3>Diagnosa Terakhir</h3>
+
+                <h2>
+                    {{ last_history.penyakit }}
+                </h2>
+
+                <p>
+                    {{ "%.1f"|format(last_history.persentase) }}%
+                </p>
+
+            </div>
+
+            {% endif %}
+
+            <!-- CTA -->
+            <div class="dashboard-card action-card">
+
+                <h3>
+                    Mulai Pemeriksaan
+                </h3>
+
+                <p>
+                    Lakukan diagnosa sekarang untuk mengetahui kondisi lambung Anda.
+                </p>
+
+                <a href="{{ url_for('diagnosa.guidelines') }}"
+                   class="start-test-btn">
+
+                    Mulai Tes
+
+                </a>
 
             </div>
 
         </div>
 
-    </div>
+        <!-- TIPS -->
+        <div class="info-section">
 
+            <h2>
+                Tips Menjaga Kesehatan Lambung
+            </h2>
 
-    <!-- LAST DIAGNOSA -->
-    {% if last_history %}
+            <div class="tips-grid">
 
-    <div class="result-card">
+                <div class="tip-card">
+                    🍽️ Makan secara teratur.
+                </div>
 
-        <h2>
-            Diagnosa Terakhir
-        </h2>
+                <div class="tip-card">
+                    ☕ Kurangi kopi berlebihan.
+                </div>
 
-        <div
-        class="percentage-circle">
+                <div class="tip-card">
+                    🌶️ Hindari makanan terlalu pedas.
+                </div>
 
-            {{
-            "%.1f"|format(
-            last_history
-            .persentase
-            )
-            }}%
+                <div class="tip-card">
+                    💧 Perbanyak minum air putih.
+                </div>
+
+            </div>
 
         </div>
 
-        <h3>
-            {{
-            last_history
-            .penyakit
-            }}
-        </h3>
-
-        <p>
-
-            {{
-            last_history
-            .created_at
-            .strftime(
-            "%d %B %Y"
-            )
-            }}
-
-        </p>
-
-    </div>
-
-    {% endif %}
+    </main>
 
 </div>
 
