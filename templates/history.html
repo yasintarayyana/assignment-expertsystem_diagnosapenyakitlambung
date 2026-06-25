@@ -8,15 +8,15 @@ Riwayat Diagnosa
 
 <div class="result-container">
 
+  <a href="{{ url_for('diagnosa.dashboard') }}" class="btn-back">
+        ← Kembali
+    </a>
+
     <div class="result-header">
 
         <h1>
             Riwayat Diagnosa
         </h1>
-
-        <p>
-            Histori hasil pemeriksaan Anda
-        </p>
 
     </div>
 
@@ -28,6 +28,7 @@ Riwayat Diagnosa
 
                 <tr>
                     <th>No</th>
+                    <th>Nama</th>
                     <th>Tanggal</th>
                     <th>Penyakit</th>
                     <th>Persentase</th>
@@ -42,34 +43,38 @@ Riwayat Diagnosa
 
                 <tr>
 
-                    <td>
-                        {{ loop.index }}
-                    </td>
+                  <td>
+                      {{ loop.index }}
+                  </td>
 
-                    <td>
-                        {{
-                        item.created_at
-                        .strftime(
-                        "%d-%m-%Y %H:%M"
-                        )
-                        }}
-                    </td>
+                  <td>
+                      {{ item.user.nama }}
+                  </td>
 
-                    <td>
-                        {{
-                        item.penyakit
-                        }}
-                    </td>
+                  <td>
+                      {{
+                      item.created_at
+                      .strftime(
+                      "%d-%m-%Y %H:%M"
+                      )
+                      }}
+                  </td>
 
-                    <td>
-                        {{
-                        "%.2f"|format(
-                        item.persentase
-                        )
-                        }}%
-                    </td>
+                  <td>
+                      {{
+                      item.penyakit
+                      }}
+                  </td>
 
-                </tr>
+                  <td>
+                      {{
+                      "%.2f"|format(
+                      item.persentase
+                      )
+                      }}%
+                  </td>
+
+              </tr>
 
                 {% endfor %}
 

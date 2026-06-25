@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+
+{% block title %}
+Riwayat Keluhan
+{% endblock %}
+
+{% block content %}
+
+<div class="onset-container">
+
+    <!-- STEPPER -->
+
+    <div class="stepper">
+
+        <div class="step completed">
+            <div class="step-circle">✓</div>
+            <span>Panduan</span>
+        </div>
+
+        <div class="step-line active"></div>
+
+        <div class="step completed">
+            <div class="step-circle">✓</div>
+            <span>Data Diri</span>
+        </div>
+
+        <div class="step-line active"></div>
+
+        <div class="step active">
+            <div class="step-circle">3</div>
+            <span>Riwayat Keluhan</span>
+        </div>
+
+        <div class="step-line"></div>
+
+        <div class="step">
+            <div class="step-circle">4</div>
+            <span>Gejala</span>
+        </div>
+
+        <div class="step-line"></div>
+
+        <div class="step">
+            <div class="step-circle">5</div>
+            <span>Hasil</span>
+        </div>
+
+    </div>
+
+    <div class="profile-form-card">
+
+        <h1>🩺 Riwayat Keluhan</h1>
+
+        <p>
+            Sebelum memulai tes gejala, silakan lengkapi informasi berikut.
+        </p>
+
+        <form action="{{ url_for('diagnosa.onset') }}" method="POST">
+
+            <!-- Lama Keluhan -->
+
+            <div class="onset-card">
+
+                <div class="question-title">
+                    Sudah berapa lama keluhan dirasakan?
+                </div>
+
+                <div class="option-group">
+
+                    <input
+                        type="radio"
+                        id="onset1"
+                        name="onset"
+                        value="<1 minggu"
+                        required>
+
+                    <label for="onset1">
+                        Kurang dari 1 minggu
+                    </label>
+
+
+                    <input
+                        type="radio"
+                        id="onset2"
+                        name="onset"
+                        value="1-4 minggu">
+
+                    <label for="onset2">
+                        1–4 minggu
+                    </label>
+
+
+                    <input
+                        type="radio"
+                        id="onset3"
+                        name="onset"
+                        value=">1 bulan">
+
+                    <label for="onset3">
+                        Lebih dari 1 bulan
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- Riwayat Penyakit -->
+
+            <div class="onset-card">
+
+                <div class="question-title">
+                    Apakah Anda pernah didiagnosis mengalami penyakit lambung sebelumnya?
+                </div>
+
+                <div class="option-group">
+
+                    <input
+                        type="radio"
+                        id="riwayatYa"
+                        name="riwayat"
+                        value="Ya">
+
+                    <label for="riwayatYa">
+                        Ya
+                    </label>
+
+
+                    <input
+                        type="radio"
+                        id="riwayatTidak"
+                        name="riwayat"
+                        value="Tidak"
+                        checked>
+
+                    <label for="riwayatTidak">
+                        Tidak
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- Jenis Riwayat -->
+
+            <div class="onset-card" id="riwayatDetail" style="display: none;">
+
+                <div class="question-title">
+                    Penyakit apa yang pernah didiagnosis?
+                </div>
+
+                <select
+                    class="form-select"
+                    name="jenis_riwayat">
+
+                    <option value="">
+                        Pilih Penyakit
+                    </option>
+
+                    <option value="Gastritis">
+                        Gastritis (Maag)
+                    </option>
+
+                    <option value="GERD">
+                        GERD
+                    </option>
+
+                    <option value="Dispepsia">
+                        Dispepsia
+                    </option>
+
+                    <option value="Tukak Lambung">
+                        Tukak Lambung
+                    </option>
+
+                    <option value="Gastroenteritis">
+                        Gastroenteritis
+                    </option>
+
+                    <option value="Lainnya">
+                        Lainnya
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="alert alert-info mt-4">
+
+                <strong>Catatan:</strong>
+                Informasi yang Anda berikan digunakan sebagai data pendukung
+                dalam proses diagnosa awal dan tidak menggantikan pemeriksaan
+                oleh dokter.
+
+            </div>
+
+
+            <!-- BUTTON -->
+
+            <div class="button-row">
+
+                <a
+                    href="{{ url_for('diagnosa.test_profile') }}"
+                    class="back-btn">
+
+                    ← Kembali
+
+                </a>
+
+                <button
+                    type="submit"
+                    class="start-btn">
+
+                    Lanjut →
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+    <script
+        src="{{ url_for(
+            'static',
+            filename='js/onset.js'
+        ) }}">
+    </script>
+
+{% endblock %}

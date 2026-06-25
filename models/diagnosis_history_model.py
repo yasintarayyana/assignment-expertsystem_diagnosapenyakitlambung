@@ -4,6 +4,8 @@ from datetime import (
     datetime
 )
 
+import pytz
+
 
 class DiagnosisHistory(
     db.Model
@@ -35,8 +37,12 @@ class DiagnosisHistory(
         db.Float,
         nullable=False
     )
+    
+    def now_wib():
+        tz = pytz.timezone("Asia/Jakarta")
+        return datetime.now(tz)
 
     created_at = db.Column(
         db.DateTime,
-        default=datetime.utcnow
+        default=now_wib
     )

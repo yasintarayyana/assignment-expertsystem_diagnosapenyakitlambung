@@ -1,10 +1,83 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="id">
 
-{% block title %}
-Login
-{% endblock %}
+<head>
 
-{% block content %}
+    <meta charset="UTF-8">
+
+    <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Login - Sistem Pakar Diagnosa Lambung
+    </title>
+
+    <link rel="stylesheet"
+    href="{{ url_for(
+        'static',
+        filename='css/style.css'
+    ) }}">
+
+</head>
+
+<body class="landing-body">
+
+<!-- HEADER -->
+
+<header class="main-header">
+
+    <div class="logo">
+
+        SISTEM PAKAR DIAGNOSA LAMBUNG
+
+    </div>
+
+
+    <div class="header-right">
+
+        <!-- CTA -->
+
+        <a
+        href="/"
+        class="header-start-btn">
+
+            🏠 Home
+
+        </a>
+
+    </div>
+
+</header>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+{% if messages %}
+
+<div class="flash-container">
+
+    {% for category, message in messages %}
+
+        {% if category == 'success' %}
+            <div class="flash-message flash-success">
+        {% elif category == 'info' %}
+            <div class="flash-message flash-info">
+        {% elif category == 'warning' %}
+            <div class="flash-message flash-info">
+        {% else %}
+            <div class="flash-message flash-danger">
+        {% endif %}
+
+            {{ message }}
+
+        </div>
+
+    {% endfor %}
+
+</div>
+
+{% endif %}
+{% endwith %}
 
 <div class="auth-wrapper">
 
@@ -12,14 +85,16 @@ Login
 
         <h1>Login</h1>
 
-        <p>
-            Masuk ke akun Anda
-        </p>
-
         <form
             method="POST"
             action="{{ url_for('auth.login') }}"
         >
+
+        <div class="form-group">
+
+          <label for="email">
+              Email
+          </label>
 
             <input
                 type="email"
@@ -28,6 +103,14 @@ Login
                 required
             >
 
+        </div>
+
+        <div class="form-group">
+
+          <label for="password">
+              Password
+          </label>
+
             <input
                 type="password"
                 name="password"
@@ -35,8 +118,10 @@ Login
                 required
             >
 
+        </div>
+
             <button type="submit">
-                Login
+                Masuk
             </button>
 
         </form>
@@ -46,13 +131,13 @@ Login
             <a
                 href="{{ url_for('auth.register') }}"
             >
-                Belum punya akun?
+                Daftar Akun
             </a>
 
             <a
-                href="/forgot-password"
+                href="{{ url_for('auth.forgot_password') }}"
             >
-                Forgot Password
+                Lupa Kata Sandi
             </a>
 
         </div>
@@ -61,4 +146,5 @@ Login
 
 </div>
 
-{% endblock %}
+</body>
+</html>

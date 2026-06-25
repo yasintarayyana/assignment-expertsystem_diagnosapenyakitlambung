@@ -38,7 +38,7 @@ from flask import (
 
 from services.pdf_service import (
     generate_result_pdf
-)
+) 
 
 diagnosa = Blueprint(
     "diagnosa",
@@ -79,26 +79,74 @@ def guidelines():
         "guidelines.html"
     )
     
+    
+# ======================
+# FAQ
+# ======================
+
+@diagnosa.route("/faq")
+def faq():
+
+    return render_template(
+        "faq.html"
+    )
+    
 
 # ======================
 # TEST PROFILE
 # ======================
 
-@diagnosa.route("/test-profile")
+@diagnosa.route("/test-profile", methods=["GET", "POST"])
 def test_profile():
+
+    if not session.get("user_id"):
+        return redirect(url_for("auth.login"))
+
+    user = User.query.get(session["user_id"])
+
+    if request.method == "POST":
+
+        session["nama"] = request.form.get("nama")
+        session["jenis_kelamin"] = request.form.get("jk")
+        session["tanggal_lahir"] = request.form.get("tanggal_lahir")
+        session["usia"] = request.form.get("usia")
+        session["email"] = request.form.get("email")
+
+        return redirect(url_for("diagnosa.onset"))
+
+    return render_template(
+        "test_profile.html",
+        user=user
+    )
+    
+    
+# ======================
+# ONSET
+# ======================
+
+@diagnosa.route(
+    "/onset",
+    methods=["GET", "POST"]
+)
+def onset():
 
     if not session.get("user_id"):
         return redirect(
             url_for("auth.login")
         )
 
-    user = User.query.get(
-        session["user_id"]
-    )
+    if request.method == "POST":
+
+        session["onset"] = request.form.get("onset")
+        session["riwayat"] = request.form.get("riwayat")
+        session["jenis_riwayat"] = request.form.get("jenis_riwayat")
+
+        return redirect(
+            url_for("diagnosa.quiz")
+        )
 
     return render_template(
-        "test_profile.html",
-        user=user
+        "onset.html"
     )
     
     
@@ -221,11 +269,20 @@ def result():
             "user_id"
         ]
     )
+    
+    selected_onset = session.get("onset")
+    riwayat_status = session.get("riwayat")
+    jenis_riwayat = session.get("jenis_riwayat")
 
-    hasil = (
-        forward_chaining(
-            selected_gejala
-        )
+    if riwayat_status == "Ya" and jenis_riwayat:
+      selected_riwayat = jenis_riwayat
+    else:
+      selected_riwayat = "Tidak"
+
+    hasil = forward_chaining(
+        selected_gejala,
+        selected_onset,
+        selected_riwayat
     )
     
     # ambil penyakit tertinggi
@@ -258,22 +315,24 @@ def result():
 
     # kirim email hasil
     if user and user.email:
-
-        send_result_email(
-            user.nama,
-            user.email,
-            hasil
-        )
+      send_result_email(
+        hasil=hasil,
+        nama=session.get("nama"),
+        email=user.email,
+        jenis_kelamin=session.get("jenis_kelamin"),
+        tanggal_lahir=session.get("tanggal_lahir"),
+        usia=session.get("usia"),
+        onset=selected_onset,
+        riwayat=selected_riwayat
+      )
 
     return render_template(
-
-        "result.html",
-
-        hasil=hasil,
-
-        nama=user.nama,
-
-        email=user.email
+      "result.html",
+      hasil=hasil,
+      nama=session.get("nama"),
+      email=session.get("email"),
+      onset=selected_onset,
+      riwayat=selected_riwayat
     )
     
 # ======================
@@ -400,22 +459,39 @@ def download_pdf():
         "selected_gejala",
         {}
     )
+    
+    selected_onset = session.get("onset")
+    riwayat_status = session.get("riwayat")
+    jenis_riwayat = session.get("jenis_riwayat")
 
-    hasil = (
-        forward_chaining(
-            selected_gejala
-        )
+    if riwayat_status == "Ya":
+      selected_riwayat = jenis_riwayat
+    else:
+      selected_riwayat = "Tidak"
+
+    hasil = forward_chaining(
+        selected_gejala,
+        selected_onset,
+        selected_riwayat
+    )
+    
+    os.makedirs(
+      "temp",
+      exist_ok=True
     )
 
-    file_path = os.path.join(
-        "temp_result.pdf"
-    )
-
+    file_path = f"hasil_{session['user_id']}.pdf"
+    
     generate_result_pdf(
-        user.nama,
-        user.email,
-        hasil,
-        file_path
+        nama=session.get("nama"),
+        email=session.get("email"),
+        jenis_kelamin=session.get("jenis_kelamin"),
+        tanggal_lahir=session.get("tanggal_lahir"),
+        usia=session.get("usia"),
+        onset=selected_onset,
+        riwayat=selected_riwayat,
+        hasil=hasil,
+        file_path=file_path
     )
 
     return send_file(

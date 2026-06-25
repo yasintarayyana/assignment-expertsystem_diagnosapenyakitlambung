@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+
+{% block title %}
+FAQ
+{% endblock %}
+
+{% block content %}
+
+<div class="result-container">
+
+  <a href="{{ url_for('diagnosa.landing') }}"
+      class="btn-back">
+
+        ← Kembali
+
+    </a>
+
+    <div class="result-header">
+
+        <h1>Frequently Asked Questions (FAQ)</h1><br>
+
+    </div>
+
+
+    <div class="faq-container">
+
+        <div class="faq-item">
+
+            <button class="faq-question">
+                Apakah hasil diagnosa ini merupakan diagnosis dokter?
+            </button>
+
+            <div class="faq-answer">
+
+                Tidak. Sistem hanya memberikan prediksi awal berdasarkan gejala yang dipilih.
+
+            </div>
+
+        </div>
+
+        <div class="faq-item">
+
+            <button class="faq-question">
+                Berapa lama proses diagnosa?
+            </button>
+
+            <div class="faq-answer">
+
+                Umumnya hanya membutuhkan waktu sekitar 2–3 menit.
+
+            </div>
+
+        </div>
+
+        <div class="faq-item">
+
+            <button class="faq-question">
+                Apakah hasil dapat disimpan?
+            </button>
+
+            <div class="faq-answer">
+
+                Ya. Hasil dapat dilihat kembali pada
+                menu riwayat, pesan masuk E-mail,
+                dan dapat diunduh dalam format PDF.
+
+            </div>
+
+        </div>
+
+      <div class="faq-item">
+
+            <button class="faq-question">
+                Apa tujuan sistem ini?
+            </button>
+
+            <div class="faq-answer">
+
+                Sistem ini digunakan untuk membantu
+                pengguna mengidentifikasi kemungkinan
+                penyakit lambung berdasarkan gejala yang
+                dirasakan menggunakan metode
+                Forward Chaining dan Certainty Factor.
+
+            </div>
+
+        </div>
+
+        <div class="faq-item">
+
+            <button class="faq-question">
+                Apakah hasil diagnosa ini 100% akurat?
+            </button>
+
+            <div class="faq-answer">
+
+                Tidak. Hasil diagnosa hanya berupa
+                prediksi awal dan tidak dapat
+                menggantikan diagnosis dokter.
+
+            </div>
+
+        </div>
+
+        <div class="faq-item">
+
+            <button class="faq-question">
+                Penyakit apa saja yang dapat dideteksi?
+            </button>
+
+            <div class="faq-answer">
+
+                Sistem dapat mengidentifikasi beberapa
+                penyakit lambung seperti Gastritis,
+                GERD, Tukak Lambung, Dispepsia, dan Gastroenteritis.
+
+            </div>
+
+        </div>
+
+        <div class="faq-item">
+
+            <button class="faq-question">
+                Apakah data saya aman?
+            </button>
+
+            <div class="faq-answer">
+
+                Aman. Data pengguna hanya digunakan untuk
+                keperluan diagnosa dan penyimpanan
+                riwayat hasil pemeriksaan.
+
+            </div>
+
+        </div>
+
+        <div class="faq-item">
+
+            <button class="faq-question">
+                Mengapa saya harus mengisi tingkat keyakinan gejala?
+            </button>
+
+            <div class="faq-answer">
+
+                Nilai keyakinan digunakan dalam metode
+                Certainty Factor untuk menghitung
+                tingkat kepercayaan hasil diagnosa.
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+document.querySelectorAll(
+    ".faq-question"
+).forEach(button => {
+
+    button.addEventListener(
+        "click",
+        () => {
+
+            button.classList.toggle(
+                "active"
+            );
+
+            const answer =
+            button.nextElementSibling;
+
+            answer.classList.toggle(
+                "show"
+            );
+        }
+    );
+});
+
+</script>
+
+{% endblock %}

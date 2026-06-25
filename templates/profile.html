@@ -16,16 +16,7 @@ Profil Saya
 
         <h1>{{ user.nama }}</h1>
 
-        <p class="profile-subtitle">
-            Data akun pengguna
-        </p>
-
         <div class="profile-info">
-
-            <div class="info-row">
-                <span>Nama</span>
-                <strong>{{ user.nama }}</strong>
-            </div>
 
             <div class="info-row">
                 <span>Email</span>
@@ -45,13 +36,6 @@ Profil Saya
             <div class="info-row">
                 <span>Jenis Kelamin</span>
                 <strong>{{ user.jenis_kelamin }}</strong>
-            </div>
-
-            <div class="info-row">
-                <span>Riwayat Penyakit</span>
-                <strong>
-                    {{ user.riwayat_penyakit or "Tidak ada" }}
-                </strong>
             </div>
 
         </div>

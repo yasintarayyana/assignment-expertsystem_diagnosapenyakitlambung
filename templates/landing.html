@@ -36,7 +36,13 @@
 
     <div class="header-right">
 
-        <!-- CTA -->
+        <a
+        href="{{ url_for('diagnosa.faq') }}"
+        class="header-faq-btn">
+
+            FAQ
+
+        </a>
 
         <a
         href="/login"
@@ -75,18 +81,9 @@
 
             Cari tahu kemungkinan
             kondisi lambung yang
-            Anda alami dengan Menjawab
+            Anda alami dengan menjawab
             beberapa pertanyaan sederhana
-            menggunakan metode
-            <strong>
-                Forward Chaining
-            </strong>
-            dan
-            <strong>
-                Certainty Factor
-            </strong>
-            hanya dalam beberapa
-            menit.
+            dalam beberapa menit.
 
         </p>
 
@@ -263,7 +260,7 @@
             </span>
 
             <h3>
-                Isi Gejala
+                Isi Keluhan dan Gejala
             </h3>
 
             <p>
@@ -320,6 +317,66 @@
         </strong>
 
     </p>
+
+</section>
+
+<section class="landing-faq">
+
+    <div class="section-title">
+
+        <h2>
+            Frequently Asked Questions
+        </h2>
+
+    </div>
+
+    <div class="faq-container">
+
+        <details class="faq-item">
+            <summary>
+                Apakah hasil diagnosa ini merupakan diagnosis dokter?
+            </summary>
+
+            <p>
+                Tidak. Sistem hanya memberikan prediksi awal berdasarkan gejala yang dipilih.
+            </p>
+
+        </details>
+
+        <details class="faq-item">
+            <summary>
+                Berapa lama proses diagnosa?
+            </summary>
+
+            <p>
+                Umumnya hanya membutuhkan waktu sekitar 2–3 menit.
+            </p>
+
+        </details>
+
+        <details class="faq-item">
+            <summary>
+                Apakah hasil dapat disimpan?
+            </summary>
+
+            <p>
+                Ya. Hasil dapat dilihat kembali pada menu riwayat dan dapat diunduh dalam format PDF.
+            </p>
+
+        </details>
+
+        <div class="faq-action">
+
+            <a href="{{ url_for('diagnosa.faq') }}"
+               class="faq-btn">
+
+                Lihat Semua FAQ
+
+            </a>
+
+        </div>
+
+    </div>
 
 </section>
 

@@ -7,7 +7,7 @@ Panduan Penggunaan
 {% block content %}
 
 <div class="guidelines-container">
-
+    
     <!-- STEPPER -->
 
     <div class="stepper">
@@ -17,24 +17,32 @@ Panduan Penggunaan
             <span>Panduan</span>
         </div>
 
-        <div class="step-line"></div>
+        <div class="step-line active"></div>
 
         <div class="step">
             <div class="step-circle">2</div>
             <span>Data Diri</span>
         </div>
 
-        <div class="step-line"></div>
+        <div class="step-line active"></div>
 
         <div class="step">
             <div class="step-circle">3</div>
-            <span>Diagnosa</span>
+            <span>Riwayat Keluhan</span>
         </div>
 
         <div class="step-line"></div>
 
         <div class="step">
             <div class="step-circle">4</div>
+            <span>Gejala</span>
+        </div>
+        
+
+        <div class="step-line"></div>
+
+        <div class="step">
+            <div class="step-circle">5</div>
             <span>Hasil</span>
         </div>
 
@@ -144,18 +152,26 @@ Panduan Penggunaan
 
         </div>
 
-        <div class="guide-actions">
+            <div class="button-row">
 
-            <a
-                href="#"
-                id="nextBtn"
-                class="next-btn disabled">
+                <a
+                    href="{{ url_for('diagnosa.dashboard') }}"
+                    class="back-btn">
 
-                Lanjut ke Pengisian Data Diri →
+                    ← Kembali
 
-            </a>
+                </a>
 
-        </div>
+                <a
+                    href="#"
+                    id="nextBtn"
+                    class="next-btn disabled">
+
+                    Lanjut →
+
+                </a>
+
+            </div>
 
     </div>
 

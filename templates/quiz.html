@@ -4,6 +4,45 @@
 
 <div class="quiz-wrapper">
 
+      <!-- STEPPER -->
+
+    <div class="stepper">
+
+        <div class="step completed">
+            <div class="step-circle">✓</div>
+            <span>Panduan</span>
+        </div>
+
+        <div class="step-line active"></div>
+
+        <div class="step completed">
+            <div class="step-circle">✓</div>
+            <span>Data Diri</span>
+        </div>
+
+        <div class="step-line active"></div>
+
+        <div class="step completed">
+            <div class="step-circle">✓</div>
+            <span>Riwayat Keluhan</span>
+        </div>
+
+        <div class="step-line"></div>
+
+        <div class="step active">
+            <div class="step-circle">4</div>
+            <span>Gejala</span>
+        </div>
+
+        <div class="step-line"></div>
+
+        <div class="step">
+            <div class="step-circle">5</div>
+            <span>Hasil</span>
+        </div>
+
+    </div>
+    
     <div class="quiz-top">
 
         <h1>
@@ -13,16 +52,7 @@
 
         </h1>
 
-        <p>
-
-            Pilih tingkat
-            keyakinan terhadap
-            gejala yang Anda alami
-
-        </p>
-
     </div>
-
 
     <form
     method="POST"
@@ -149,14 +179,27 @@
 
     {% endfor %}
 
+<!-- BUTTON -->
 
-    <button
-    class="quiz-btn"
-    type="submit">
+            <div class="button-row">
 
-        Lanjutkan
+                <a
+                    href="{{ url_for('diagnosa.test_profile') }}"
+                    class="back-btn">
 
-    </button>
+                    ← Kembali
+
+                </a>
+
+                <button
+                    type="submit"
+                    class="start-btn">
+
+                    Lanjut →
+
+                </button>
+
+            </div>
 
     </form>
 

@@ -36,8 +36,16 @@ Dashboard
                 👤 Profil
             </a>
 
+            <a href="{{ url_for('auth.change_password') }}">
+                🔒 Ganti Password
+            </a>
+            
             <a href="{{ url_for('diagnosa.history') }}">
                 📋 Riwayat
+            </a>
+
+            <a href="{{ url_for('diagnosa.faq') }}">
+                ❓ FAQ
             </a>
 
             <a href="{{ url_for('diagnosa.guidelines') }}">
@@ -58,20 +66,22 @@ Dashboard
 
         <div class="welcome-section">
 
+        <div>
             <h1>
                 Halo, {{ user.nama }} 👋
             </h1>
 
             <p>
-                Selamat datang kembali
+                Selamat datang kembali. Pantau kesehatan lambung Anda dan lakukan pemeriksaan secara berkala.
             </p>
-
         </div>
+
+    </div>
 
         <div class="dashboard-grid">
 
             <!-- TOTAL DIAGNOSA -->
-            <div class="dashboard-card">
+            <div class="dashboard-card stat-blue">
 
                 <div class="card-icon">
                     🩺
@@ -90,7 +100,7 @@ Dashboard
             </div>
 
             <!-- RIWAYAT -->
-            <div class="dashboard-card">
+            <div class="dashboard-card stat-green">
 
                 <div class="card-icon">
                     📋
@@ -111,7 +121,7 @@ Dashboard
             <!-- HASIL TERAKHIR -->
             {% if last_history %}
 
-            <div class="dashboard-card">
+            <div class="dashboard-card stat-purple">
 
                 <div class="card-icon">
                     📊
@@ -145,7 +155,7 @@ Dashboard
                 <a href="{{ url_for('diagnosa.guidelines') }}"
                    class="start-test-btn">
 
-                    Mulai Tes
+                    🚀 Mulai Tes
 
                 </a>
 
@@ -171,11 +181,62 @@ Dashboard
                 </div>
 
                 <div class="tip-card">
-                    🌶️ Hindari makanan terlalu pedas.
+                    🌶️ Hindari makanan pedas.
                 </div>
 
                 <div class="tip-card">
-                    💧 Perbanyak minum air putih.
+                    💧 Banyak minum air putih.
+                </div>
+
+                <div class="tip-card">
+                    😌 Kelola stres dengan baik.
+                </div>
+  
+            </div>
+
+        </div>
+
+        <div class="info-section">
+
+            <h2>
+                Penyakit Lambung yang Dapat Dideteksi Sistem
+            </h2>
+
+            <div class="disease-grid">
+
+                <div class="disease-card">
+                    <h3>Gastritis</h3>
+                    <p>
+                        Peradangan pada lapisan lambung yang dapat menyebabkan nyeri ulu hati, mual, muntah, dan perut terasa tidak nyaman.
+                    </p>
+                </div>
+
+                <div class="disease-card">
+                    <h3>GERD</h3>
+                    <p>
+                        Kondisi naiknya asam lambung ke kerongkongan yang sering menimbulkan sensasi terbakar di dada dan rasa asam di mulut.
+                    </p>
+                </div>
+
+                <div class="disease-card">
+                    <h3>Tukak Lambung</h3>
+                    <p>
+                        Luka pada dinding lambung yang dapat menyebabkan nyeri perut, mual, dan gangguan pencernaan.
+                    </p>
+                </div>
+
+                <div class="disease-card">
+                    <h3>Dispepsia</h3>
+                    <p>
+                        Gangguan pencernaan yang ditandai dengan rasa penuh, kembung, cepat kenyang, dan tidak nyaman pada perut bagian atas.
+                    </p>
+                </div>
+
+                <div class="disease-card">
+                    <h3>Gastroenteritis</h3>
+                    <p>
+                        Peradangan pada lambung dan usus yang umumnya disebabkan oleh infeksi virus, bakteri, atau makanan yang terkontaminasi. Gejalanya dapat berupa mual, muntah, diare, kram perut, dan demam.
+                    </p>
                 </div>
 
             </div>

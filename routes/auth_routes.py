@@ -20,6 +20,11 @@ from services.email_service import (
     send_otp_email
 )
 
+from werkzeug.security import (
+    check_password_hash,
+    generate_password_hash
+)
+
 auth = Blueprint(
     "auth",
     __name__
@@ -219,7 +224,7 @@ def verify():
             db.session.commit()
 
             flash(
-                "Akun berhasil dibuat",
+                "Akun berhasil dibuat. Silakan login.",
                 "success"
             )
 
@@ -334,7 +339,7 @@ def login():
         ] = user.email
 
         flash(
-            "Login berhasil",
+            f"Selamat datang, {user.nama} 👋",
             "success"
         )
 
@@ -641,4 +646,138 @@ def edit_profile():
     return render_template(
         "edit_profile.html",
         user=user
+    )
+
+# ==========================
+# GANTI PASSWORD
+# ==========================
+@auth.route(
+    "/change-password",
+    methods=["GET", "POST"]
+)
+def change_password():
+
+    if not session.get("user_id"):
+
+        return redirect(
+            url_for(
+                "auth.login"
+            )
+        )
+
+    user = User.query.get(
+        session["user_id"]
+    )
+
+    if request.method == "POST":
+
+        old_password = request.form.get(
+            "old_password"
+        )
+
+        new_password = request.form.get(
+            "new_password"
+        )
+
+        confirm_password = request.form.get(
+            "confirm_password"
+        )
+
+        # ======================
+        # PASSWORD LAMA
+        # ======================
+
+        if not check_password_hash(
+            user.password,
+            old_password
+        ):
+
+            flash(
+                "Password lama salah.",
+                "danger"
+            )
+
+            return redirect(
+                url_for(
+                    "auth.change_password"
+                )
+            )
+
+        # ======================
+        # MINIMAL 8 KARAKTER
+        # ======================
+
+        if len(new_password) < 8:
+
+            flash(
+                "Password baru minimal 8 karakter.",
+                "danger"
+            )
+
+            return redirect(
+                url_for(
+                    "auth.change_password"
+                )
+            )
+
+        # ======================
+        # TIDAK BOLEH SAMA
+        # ======================
+
+        if check_password_hash(
+            user.password,
+            new_password
+        ):
+
+            flash(
+                "Password baru tidak boleh sama dengan password lama.",
+                "danger"
+            )
+
+            return redirect(
+                url_for(
+                    "auth.change_password"
+                )
+            )
+
+        # ======================
+        # KONFIRMASI PASSWORD
+        # ======================
+
+        if new_password != confirm_password:
+
+            flash(
+                "Konfirmasi password tidak cocok.",
+                "danger"
+            )
+
+            return redirect(
+                url_for(
+                    "auth.change_password"
+                )
+            )
+
+        # ======================
+        # SIMPAN PASSWORD BARU
+        # ======================
+
+        user.password = generate_password_hash(
+            new_password
+        )
+
+        db.session.commit()
+
+        flash(
+            "Password berhasil diubah.",
+            "success"
+        )
+
+        return redirect(
+            url_for(
+                "auth.profile"
+            )
+        )
+
+    return render_template(
+        "change_password.html"
     )

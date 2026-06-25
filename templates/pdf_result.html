@@ -1,47 +1,3 @@
-{% extends 'base.html' %}
-
-{% block content %}
-
-<div class="result-container">
-
-    <!-- STEPPER -->
-    <div class="stepper">
-
-        <div class="step completed">
-            <div class="step-circle">✓</div>
-            <span>Panduan</span>
-        </div>
-
-        <div class="step-line active"></div>
-
-        <div class="step completed">
-            <div class="step-circle">✓</div>
-            <span>Data Diri</span>
-        </div>
-
-        <div class="step-line active"></div>
-
-        <div class="step completed">
-            <div class="step-circle">✓</div>
-            <span>Riwayat Keluhan</span>
-        </div>
-
-        <div class="step-line"></div>
-
-        <div class="step completed">
-            <div class="step-circle">✓</div>
-            <span>Gejala</span>
-        </div>
-
-        <div class="step-line"></div>
-
-        <div class="step active">
-            <div class="step-circle">✓</div>
-            <span>Hasil</span>
-        </div>
-
-    </div>
-
     <!-- HEADER -->
     <div class="result-header">
 
@@ -53,6 +9,18 @@
         </p>
 
     </div>
+
+<div class="section-box soft-blue">
+
+    <h2>Data Diri</h2>
+
+    <p><strong>Nama:</strong> {{ nama }}</p>
+    <p><strong>Email:</strong> {{ email }}</p>
+    <p><strong>Jenis Kelamin:</strong> {{ jenis_kelamin }}</p>
+    <p><strong>Tanggal Lahir:</strong> {{ tanggal_lahir }}</p>
+    <p><strong>Usia:</strong> {{ usia }}</p>
+
+</div>
 
 <!-- HASIL UTAMA -->
     <div class="result-card">
@@ -212,22 +180,3 @@
     </div>
 
 </div>
-
-<!-- ACTION -->
-<div class="result-actions">
-
-    <a href="{{ url_for('diagnosa.dashboard') }}" class="restart-btn">
-        <span class="btn-icon">↺</span>
-        Kembali ke Dashboard
-    </a>
-
-    <a href="{{ url_for('diagnosa.download_pdf') }}" class="restart-btn">
-        <span class="btn-icon">📄</span>
-        Download Hasil PDF
-    </a>
-
-</div>
-
-<script src="{{ url_for('static', filename='js/result.js') }}"></script>
-
-{% endblock %}

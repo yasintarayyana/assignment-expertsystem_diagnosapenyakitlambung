@@ -1,99 +1,123 @@
-from flask_mail import (
-    Message
-)
-
-from extensions import (
-    mail
-)
-
+from flask_mail import Message
+from extensions import mail
 
 def send_result_email(
-        nama,
-        email,
-        hasil):
+    nama,
+    email,
+    hasil,
+    jenis_kelamin,
+    tanggal_lahir,
+    usia,
+    onset,
+    riwayat
+):
 
-    subject = (
-        "Hasil Diagnosa "
-        "Penyakit Lambung"
-    )
+    subject = "Hasil Diagnosa Penyakit Lambung"
 
     body = f"""
 Halo {nama},
 
-Berikut hasil diagnosa penyakit lambung Anda.
+Berikut hasil pemeriksaan pada Sistem Pakar Diagnosa Penyakit Lambung.
 
-━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DATA DIRI
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Nama               : {nama}
+Jenis Kelamin      : {jenis_kelamin}
+Tanggal Lahir      : {tanggal_lahir}
+Usia               : {usia} tahun
 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RIWAYAT KELUHAN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Lama Keluhan Dirasakan : {onset}
+Diagnosa Penyakit Lambung Sebelumnya : {riwayat}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 HASIL DIAGNOSA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Kemungkinan Penyakit : {hasil['nama']}
+Tingkat Keyakinan : {hasil['persentase']}%
+Deskripsi : {hasil['deskripsi']}
 
-Kemungkinan Penyakit:
-{hasil['nama']}
-
-Tingkat Keyakinan:
-{hasil['persentase']}%
-
-Deskripsi:
-{hasil['deskripsi']}
-
-━━━━━━━━━━━━━━━━━━
-
-PANTANGAN
-
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PILIHAN GEJALA YANG MENANDAKAN {hasil['nama'].upper()}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 """
+    for item in hasil["reasoning"]:
+        if item["penyakit"] == hasil["nama"]:
 
-    for item in hasil[
-        'pantangan'
-    ]:
+            for g in item["gejala"]:
+
+                body += (
+                    f"• {g['nama']} "
+                    f"({round(g['hasil_cf'] * 100, 1)}%)\n"
+                )
+
+    body += """
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+KEMUNGKINAN PENYAKIT LAIN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+"""
+    for item in hasil["matched_rules"]:
 
         body += (
-            f"✗ {item}\n"
+            f"• {item['penyakit']} : "
+            f"{item['persen']}%\n"
         )
 
-    body += (
-        "\n━━━━━━━━━━━━━━━━━━\n"
-        "\nREKOMENDASI\n\n"
-    )
+    body += """
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SARAN PENANGANAN AWAL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+"""
+    for item in hasil["solusi"]:
 
-    for item in hasil[
-        'solusi'
-    ]:
+        body += f"✓ {item}\n"
 
-        body += (
-            f"✓ {item}\n"
-        )
+    body += """
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+REKOMENDASI OBAT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+"""
+    for item in hasil["obat"]:
 
-    body += f"""
+        body += f"✓ {item}\n"
 
-━━━━━━━━━━━━━━━━━━
+    body += """
+-------------------------------------------------------
+CATATAN:
+Obat dengan tanda (*) memerlukan resep dan hanya boleh 
+digunakan sesuai anjuran dokter.
+-------------------------------------------------------
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PANTANGAN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+"""
+    for item in hasil["pantangan"]:
 
-Catatan:
-Hasil ini merupakan
-prediksi awal menggunakan
-metode Rule Based
-dan Forward Chaining.
+        body += f"✗ {item}\n"
 
-Silakan konsultasikan
-ke dokter untuk
-diagnosa medis resmi.
+    body += """
+    
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CATATAN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Hasil ini merupakan prediksi awal menggunakan metode Forward Chaining dan Certainty Factor.
+Hasil tidak dapat digunakan sebagai pengganti diagnosis medis profesional.
+Jika keluhan berlanjut atau memburuk, segera konsultasikan dengan dokter.
+
 
 Terima kasih,
 SISTEM PAKAR LAMBUNG
 """
 
     msg = Message(
-
         subject=subject,
-
-        recipients=[
-            email
-        ],
-
+        recipients=[email],
         body=body,
-
         sender=(
-
             "SISTEM PAKAR LAMBUNG",
-
             "projectsistempakarlambung@gmail.com"
         )
     )

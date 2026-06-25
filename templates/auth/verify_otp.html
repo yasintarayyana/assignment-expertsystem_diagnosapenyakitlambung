@@ -27,13 +27,20 @@ Verifikasi OTP
             action="{{ url_for('auth.verify') }}"
         >
 
+        <div class="form-group">
+            <label for="otp">
+                Kode OTP
+            </label>
+
             <input
                 type="text"
+                id="otp"
                 name="otp"
                 placeholder="Masukkan 6 Digit OTP"
                 maxlength="6"
                 required
             >
+        </div>
 
             <button type="submit">
                 Verifikasi
@@ -46,7 +53,7 @@ Verifikasi OTP
             <a
                 href="{{ url_for('auth.login') }}"
             >
-                Kembali ke Login
+                Kembali Masuk Akun
             </a>
 
         </div>

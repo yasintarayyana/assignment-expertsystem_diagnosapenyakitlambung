@@ -74,25 +74,7 @@ Edit Profil
 
             </div>
 
-            <div class="form-group">
-
-                <label>Riwayat Penyakit</label>
-
-                <textarea
-                    name="riwayat_penyakit"
-                    rows="4">{{ user.riwayat_penyakit }}</textarea>
-
-            </div>
-
             <div class="button-group">
-
-                <button
-                    type="submit"
-                    class="save-btn">
-
-                    Simpan Perubahan
-
-                </button>
 
                 <a href="{{ url_for('auth.profile') }}"
                    class="cancel-btn">
@@ -100,6 +82,14 @@ Edit Profil
                     Batal
 
                 </a>
+
+                <button
+                    type="submit"
+                    class="save-btn">
+
+                    Simpan
+
+                </button>
 
             </div>
 

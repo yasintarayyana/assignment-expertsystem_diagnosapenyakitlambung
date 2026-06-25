@@ -24,17 +24,24 @@ Data Diri
             <span>Data Diri</span>
         </div>
 
-        <div class="step-line"></div>
+        <div class="step-line active"></div>
 
         <div class="step">
             <div class="step-circle">3</div>
-            <span>Diagnosa</span>
+            <span>Riwayat Keluhan</span>
         </div>
 
         <div class="step-line"></div>
 
         <div class="step">
             <div class="step-circle">4</div>
+            <span>Gejala</span>
+        </div>
+
+        <div class="step-line"></div>
+
+        <div class="step">
+            <div class="step-circle">5</div>
             <span>Hasil</span>
         </div>
 
@@ -63,111 +70,40 @@ Data Diri
 
         </div>
 
-        <form>
+<form>
 
-            <div class="form-group">
+    <div class="form-grid">
 
-                <label>Nama Lengkap *</label>
+        <div class="form-group">
+            <label>Nama Lengkap *</label>
+            <input type="text" id="nama" placeholder="Nama Lengkap">
+        </div>
 
-                <input
-                    type="text"
-                    id="nama">
+        <div class="form-group">
+            <label>Jenis Kelamin *</label>
+            <select id="jk" name="jk" required>
+                <option value="">Pilih Jenis Kelamin</option>
+                <option value="Laki-laki">Laki-laki</option>
+                <option value="Perempuan">Perempuan</option>
+            </select>
+        </div>
 
-            </div>
+        <div class="form-group">
+            <label>Tanggal Lahir *</label>
+            <input type="date" id="tanggal_lahir" name="tanggal_lahir" placeholder="Tanggal Lahir">
+        </div>
 
-            <div class="form-group">
+        <div class="form-group">
+            <label>Usia *</label>
+            <input type="number" id="umur" name="usia" readonly placeholder="Usia">
+        </div>
 
-                <label>Tanggal Lahir *</label>
+        <div class="form-group" style="grid-column: 1 / -1;">
+            <label>Email *</label>
+            <input type="email" id="email" name="email" placeholder="Email">
+        </div>
 
-                <input
-                    type="date"
-                    id="tanggal_lahir">
-
-            </div>
-
-            <div class="form-group">
-
-                <label>Usia *</label>
-
-                <input
-                    type="number"
-                    id="umur"
-                    readonly>
-
-            </div>
-
-            <div class="form-group">
-
-                <label>Email *</label>
-
-                <input
-                    type="email"
-                    id="email">
-
-            </div>
-
-            <div class="form-group">
-
-                <label>Jenis Kelamin *</label>
-
-                <div class="radio-group">
-
-                    <label>
-                        <input
-                            type="radio"
-                            name="jk"
-                            value="Laki-laki">
-                        Laki-laki
-                    </label>
-
-                    <label>
-                        <input
-                            type="radio"
-                            name="jk"
-                            value="Perempuan">
-                        Perempuan
-                    </label>
-
-                </div>
-
-            </div>
-
-            <div class="form-group">
-
-                <label>
-                    Riwayat Penyakit Lambung Sebelumnya
-                </label>
-
-                <div class="checkbox-list">
-
-                    <label>
-                        <input type="checkbox">
-                        Gastritis (Maag)
-                    </label>
-
-                    <label>
-                        <input type="checkbox">
-                        GERD
-                    </label>
-
-                    <label>
-                        <input type="checkbox">
-                        Tukak Lambung
-                    </label>
-
-                    <label>
-                        <input type="checkbox">
-                        Dispepsia
-                    </label>
-
-                    <label>
-                        <input type="checkbox">
-                        Tidak Memiliki Riwayat
-                    </label>
-
-                </div>
-
-            </div>
+    </div>
 
             <div class="confirmation-box">
 
@@ -194,11 +130,11 @@ Data Diri
                 </a>
 
                 <a
-                    href="{{ url_for('diagnosa.quiz') }}"
+                    href="{{ url_for('diagnosa.onset') }}"
                     id="startBtn"
                     class="start-btn disabled">
 
-                    Mulai Diagnosa →
+                    Lanjut →
 
                 </a>
 
@@ -211,119 +147,18 @@ Data Diri
 </div>
 
 <script>
-
-const profileData = {
-    nama: "{{ user.nama }}",
-    email: "{{ user.email }}",
+window.profileData = {
+    nama: "{{ user.nama or '' }}",
+    email: "{{ user.email or '' }}",
     tanggal_lahir:
         "{{ user.tanggal_lahir.strftime('%Y-%m-%d') if user.tanggal_lahir else '' }}",
     jenis_kelamin:
-        "{{ user.jenis_kelamin }}",
+        "{{ user.jenis_kelamin or '' }}",
     umur:
-        "{{ user.umur }}"
+        "{{ user.umur or '' }}"
 };
-
-const useProfile =
-document.getElementById(
-    "useProfile"
-);
-
-function fillProfile(){
-
-    document.getElementById(
-        "nama"
-    ).value =
-    profileData.nama;
-
-    document.getElementById(
-        "email"
-    ).value =
-    profileData.email;
-
-    document.getElementById(
-        "tanggal_lahir"
-    ).value =
-    profileData.tanggal_lahir;
-
-    document.getElementById(
-        "umur"
-    ).value =
-    profileData.umur;
-
-    document
-    .querySelector(
-        `input[value="${profileData.jenis_kelamin}"]`
-    )
-    ?.setAttribute(
-        "checked",
-        true
-    );
-}
-
-function clearProfile(){
-
-    document.getElementById(
-        "nama"
-    ).value = "";
-
-    document.getElementById(
-        "email"
-    ).value = "";
-
-    document.getElementById(
-        "tanggal_lahir"
-    ).value = "";
-
-    document.getElementById(
-        "umur"
-    ).value = "";
-
-    document
-    .querySelectorAll(
-        'input[name="jk"]'
-    )
-    .forEach(
-        radio => radio.checked = false
-    );
-}
-
-fillProfile();
-
-useProfile.addEventListener(
-    "change",
-    function(){
-
-        if(this.checked){
-
-            fillProfile();
-
-        }else{
-
-            clearProfile();
-
-        }
-    }
-);
-
-document
-.getElementById(
-    "confirmData"
-)
-.addEventListener(
-    "change",
-    function(){
-
-        document
-        .getElementById(
-            "startBtn"
-        )
-        .classList.toggle(
-            "disabled",
-            !this.checked
-        );
-    }
-);
-
 </script>
+
+<script src="{{ url_for('static', filename='js/test_profile.js') }}"></script>
 
 {% endblock %}
