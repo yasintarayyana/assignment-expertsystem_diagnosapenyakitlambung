@@ -17,27 +17,6 @@ def create_app():
 
     db.init_app(app)
     mail.init_app(app)
-    
-    import smtplib
-
-    try:
-        smtp = smtplib.SMTP("smtp.gmail.com", 587, timeout=10)
-        print("1. Connected")
-
-        smtp.starttls()
-        print("2. TLS OK")
-
-        smtp.login(
-            app.config["MAIL_USERNAME"],
-            app.config["MAIL_PASSWORD"]
-        )
-        print("3. Login OK")
-
-        smtp.quit()
-        print("SMTP SUCCESS")
-
-    except Exception as e:
-        print("SMTP FAILED:", repr(e))
 
     app.register_blueprint(diagnosa)
     app.register_blueprint(auth)

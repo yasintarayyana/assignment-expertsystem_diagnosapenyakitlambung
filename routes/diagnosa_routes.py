@@ -319,7 +319,7 @@ def result():
           send_result_email(
             hasil=hasil,
             nama=session.get("nama"),
-            email=user.email,
+            email=session.get("email"),
             jenis_kelamin=session.get("jenis_kelamin"),
             tanggal_lahir=session.get("tanggal_lahir"),
             usia=session.get("usia"),

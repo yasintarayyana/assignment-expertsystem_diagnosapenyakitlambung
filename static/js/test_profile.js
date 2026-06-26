@@ -1,96 +1,106 @@
 const profileData = window.profileData;
 
-const useProfile =
-document.getElementById(
-    "useProfile"
-);
+const useProfile = document.getElementById("useProfile");
 
-function fillProfile(){
+// =======================
+// HITUNG UMUR OTOMATIS
+// =======================
+function hitungUmur() {
 
-    document.getElementById(
-        "nama"
-    ).value =
-    profileData.nama;
+    const tanggal = document.getElementById("tanggal_lahir").value;
 
-    document.getElementById(
-        "email"
-    ).value =
-    profileData.email;
+    if (!tanggal) {
+        document.getElementById("umur").value = "";
+        validateForm();
+        return;
+    }
 
-    document.getElementById(
-        "tanggal_lahir"
-    ).value =
-    profileData.tanggal_lahir;
+    const lahir = new Date(tanggal);
+    const hariIni = new Date();
 
-    document.getElementById(
-        "umur"
-    ).value =
-    profileData.umur;
+    let umur = hariIni.getFullYear() - lahir.getFullYear();
 
-    document.getElementById(
-        "jk"
-    ).value =
-    profileData.jenis_kelamin;
+    const bulan =
+        hariIni.getMonth() - lahir.getMonth();
 
-    validateForm();
-}
+    if (
+        bulan < 0 ||
+        (
+            bulan === 0 &&
+            hariIni.getDate() < lahir.getDate()
+        )
+    ) {
+        umur--;
+    }
 
-function clearProfile(){
-
-    document.getElementById(
-        "nama"
-    ).value = "";
-
-    document.getElementById(
-        "email"
-    ).value = "";
-
-    document.getElementById(
-        "tanggal_lahir"
-    ).value = "";
-
-    document.getElementById(
-        "umur"
-    ).value = "";
-
-    document.getElementById(
-        "jk"
-    ).value = "";
+    document.getElementById("umur").value = umur;
 
     validateForm();
 }
 
-function validateForm(){
+// =======================
+// ISI DATA DARI PROFILE
+// =======================
+function fillProfile() {
+
+    document.getElementById("nama").value =
+        profileData.nama;
+
+    document.getElementById("email").value =
+        profileData.email;
+
+    document.getElementById("tanggal_lahir").value =
+        profileData.tanggal_lahir;
+
+    document.getElementById("umur").value =
+        profileData.umur;
+
+    document.getElementById("jk").value =
+        profileData.jenis_kelamin;
+
+    validateForm();
+}
+
+// =======================
+// KOSONGKAN FORM
+// =======================
+function clearProfile() {
+
+    document.getElementById("nama").value = "";
+
+    document.getElementById("email").value = "";
+
+    document.getElementById("tanggal_lahir").value = "";
+
+    document.getElementById("umur").value = "";
+
+    document.getElementById("jk").value = "";
+
+    validateForm();
+}
+
+// =======================
+// VALIDASI FORM
+// =======================
+function validateForm() {
 
     const nama =
-        document.getElementById(
-            "nama"
-        ).value.trim();
+        document.getElementById("nama").value.trim();
 
     const email =
-        document.getElementById(
-            "email"
-        ).value.trim();
+        document.getElementById("email").value.trim();
 
     const tanggalLahir =
-        document.getElementById(
-            "tanggal_lahir"
-        ).value.trim();
+        document.getElementById("tanggal_lahir").value.trim();
 
     const umur =
-        document.getElementById(
-            "umur"
-        ).value.trim();
+        document.getElementById("umur").value.trim();
 
     const jk =
-        document.getElementById(
-            "jk"
-        ).value.trim();
+        document.getElementById("jk").value.trim();
 
     const confirm =
-        document.getElementById(
-            "confirmData"
-        ).checked;
+        document.getElementById("confirmData").checked;
 
     const lengkap =
         nama &&
@@ -100,26 +110,30 @@ function validateForm(){
         jk;
 
     document
-        .getElementById(
-            "startBtn"
-        )
+        .getElementById("startBtn")
         .classList.toggle(
             "disabled",
             !(lengkap && confirm)
         );
 }
 
+// =======================
+// LOAD AWAL
+// =======================
 fillProfile();
 
+// =======================
+// CHECKBOX GUNAKAN DATA
+// =======================
 useProfile.addEventListener(
     "change",
-    function(){
+    function () {
 
-        if(this.checked){
+        if (this.checked) {
 
             fillProfile();
 
-        }else{
+        } else {
 
             clearProfile();
 
@@ -127,77 +141,64 @@ useProfile.addEventListener(
     }
 );
 
+// =======================
+// EVENT INPUT
+// =======================
 document
-.getElementById(
-    "nama"
-)
-.addEventListener(
-    "input",
-    validateForm
-);
-
-document
-.getElementById(
-    "email"
-)
-.addEventListener(
-    "input",
-    validateForm
-);
+    .getElementById("nama")
+    .addEventListener(
+        "input",
+        validateForm
+    );
 
 document
-.getElementById(
-    "tanggal_lahir"
-)
-.addEventListener(
-    "change",
-    validateForm
-);
+    .getElementById("email")
+    .addEventListener(
+        "input",
+        validateForm
+    );
 
 document
-.getElementById(
-    "umur"
-)
-.addEventListener(
-    "input",
-    validateForm
-);
+    .getElementById("tanggal_lahir")
+    .addEventListener(
+        "change",
+        hitungUmur
+    );
 
 document
-.getElementById(
-    "jk"
-)
-.addEventListener(
-    "change",
-    validateForm
-);
+    .getElementById("umur")
+    .addEventListener(
+        "input",
+        validateForm
+    );
 
 document
-.getElementById(
-    "confirmData"
-)
-.addEventListener(
-    "change",
-    validateForm
-);
+    .getElementById("jk")
+    .addEventListener(
+        "change",
+        validateForm
+    );
 
 document
-.getElementById(
-    "startBtn"
-)
-.addEventListener(
-    "click",
-    function(e){
+    .getElementById("confirmData")
+    .addEventListener(
+        "change",
+        validateForm
+    );
 
-        if(
-            this.classList.contains(
-                "disabled"
-            )
-        ){
+document
+    .getElementById("startBtn")
+    .addEventListener(
+        "click",
+        function (e) {
 
-            e.preventDefault();
+            if (
+                this.classList.contains("disabled")
+            ) {
+
+                e.preventDefault();
+            }
         }
-    }
 );
 
 validateForm();
