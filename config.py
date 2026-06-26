@@ -43,7 +43,7 @@ class Config:
 
     MAIL_PASSWORD = os.getenv(
         "MAIL_PASSWORD",
-        ""
+        "glanqbuziivjedvn"
     )
 
     MAIL_DEFAULT_SENDER = os.getenv(
@@ -51,4 +51,4 @@ class Config:
         "projectsistempakarlambung@gmail.com"
     )
     
-MAIL_TIMEOUT = int(os.getenv("MAIL_TIMEOUT", 10))
+    MAIL_TIMEOUT = int(os.getenv("MAIL_TIMEOUT", 10))
