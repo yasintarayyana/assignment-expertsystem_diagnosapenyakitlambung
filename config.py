@@ -43,7 +43,7 @@ class Config:
 
     MAIL_PASSWORD = os.getenv(
         "MAIL_PASSWORD",
-        "APP_PASSWORD_KAMU"
+        "glanqbuziivjedvn"
     )
 
     MAIL_DEFAULT_SENDER = os.getenv(
