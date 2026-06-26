@@ -18,12 +18,26 @@ def create_app():
     db.init_app(app)
     mail.init_app(app)
     
-    print("MAIL_SERVER:", app.config["MAIL_SERVER"])
-    print("MAIL_PORT:", app.config["MAIL_PORT"])
-    print("MAIL_USE_TLS:", app.config["MAIL_USE_TLS"])
-    print("MAIL_USE_SSL:", app.config["MAIL_USE_SSL"])
-    print("MAIL_USERNAME:", app.config["MAIL_USERNAME"])
-    print("MAIL_TIMEOUT:", app.config.get("MAIL_TIMEOUT"))
+    import smtplib
+
+    try:
+        smtp = smtplib.SMTP("smtp.gmail.com", 587, timeout=10)
+        print("1. Connected")
+
+        smtp.starttls()
+        print("2. TLS OK")
+
+        smtp.login(
+            app.config["MAIL_USERNAME"],
+            app.config["MAIL_PASSWORD"]
+        )
+        print("3. Login OK")
+
+        smtp.quit()
+        print("SMTP SUCCESS")
+
+    except Exception as e:
+        print("SMTP FAILED:", repr(e))
 
     app.register_blueprint(diagnosa)
     app.register_blueprint(auth)
