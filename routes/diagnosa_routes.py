@@ -314,20 +314,20 @@ def result():
     db.session.commit()
 
     # kirim email hasil
-    if user and user.email:
-      try:
-          send_result_email(
-            hasil=hasil,
-            nama=session.get("nama"),
-            email=user.email,
-            jenis_kelamin=session.get("jenis_kelamin"),
-            tanggal_lahir=session.get("tanggal_lahir"),
-            usia=session.get("usia"),
-            onset=selected_onset,
-            riwayat=selected_riwayat
-          )
-      except Exception as e:
-        print("EMAIL ERROR:", e)
+    # if user and user.email:
+    #  try:
+    #      send_result_email(
+    #        hasil=hasil,
+    #        nama=session.get("nama"),
+    #        email=user.email,
+    #        jenis_kelamin=session.get("jenis_kelamin"),
+    #        tanggal_lahir=session.get("tanggal_lahir"),
+    #        usia=session.get("usia"),
+    #        onset=selected_onset,
+    #        riwayat=selected_riwayat
+    #      )
+    #  except Exception as e:
+    #    print("EMAIL ERROR:", e)
 
     return render_template(
       "result.html",
