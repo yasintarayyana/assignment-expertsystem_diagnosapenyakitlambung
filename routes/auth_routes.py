@@ -11,8 +11,6 @@ from flask import (
 from datetime import datetime
 import random
 
-from streamlit import user
-
 from models.user_model import User
 from extensions import db
 
