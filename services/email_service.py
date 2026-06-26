@@ -122,11 +122,14 @@ SISTEM PAKAR LAMBUNG
         )
     )
 
+    import traceback
     try:
         mail.send(msg)
         print("Email berhasil dikirim.")
     except Exception as e:
-        print(f"Gagal mengirim email: {e}")
+        print("Gagal mengirim email:", repr(e))
+        traceback.print_exc()
+        raise
     
 # ==========================
 # EMAIL OTP VERIFICATION
@@ -177,8 +180,11 @@ SISTEM PAKAR LAMBUNG
         )
     )
 
+    import traceback
     try:
         mail.send(msg)
         print("Email berhasil dikirim.")
     except Exception as e:
-        print(f"Gagal mengirim email: {e}")
+        print("Gagal mengirim email:", repr(e))
+        traceback.print_exc()
+        raise

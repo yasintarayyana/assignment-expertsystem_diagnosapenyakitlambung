@@ -18,10 +18,12 @@ def create_app():
     db.init_app(app)
     mail.init_app(app)
     
-    print(app.config["MAIL_SERVER"])
-    print(app.config["MAIL_PORT"])
-    print(app.config["MAIL_USERNAME"])
-    print(app.config["MAIL_PASSWORD"])
+    print("MAIL_SERVER:", app.config["MAIL_SERVER"])
+    print("MAIL_PORT:", app.config["MAIL_PORT"])
+    print("MAIL_USE_TLS:", app.config["MAIL_USE_TLS"])
+    print("MAIL_USE_SSL:", app.config["MAIL_USE_SSL"])
+    print("MAIL_USERNAME:", app.config["MAIL_USERNAME"])
+    print("MAIL_TIMEOUT:", app.config.get("MAIL_TIMEOUT"))
 
     app.register_blueprint(diagnosa)
     app.register_blueprint(auth)
