@@ -17,6 +17,11 @@ def create_app():
 
     db.init_app(app)
     mail.init_app(app)
+    
+    print(app.config["MAIL_SERVER"])
+    print(app.config["MAIL_PORT"])
+    print(app.config["MAIL_USERNAME"])
+    print(app.config["MAIL_PASSWORD"])
 
     app.register_blueprint(diagnosa)
     app.register_blueprint(auth)

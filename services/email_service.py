@@ -122,7 +122,11 @@ SISTEM PAKAR LAMBUNG
         )
     )
 
-    mail.send(msg)
+    try:
+        mail.send(msg)
+        print("Email berhasil dikirim.")
+    except Exception as e:
+        print(f"Gagal mengirim email: {e}")
     
 # ==========================
 # EMAIL OTP VERIFICATION
@@ -173,4 +177,8 @@ SISTEM PAKAR LAMBUNG
         )
     )
 
-    mail.send(msg)
+    try:
+        mail.send(msg)
+        print("Email berhasil dikirim.")
+    except Exception as e:
+        print(f"Gagal mengirim email: {e}")

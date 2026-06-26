@@ -50,3 +50,5 @@ class Config:
         "MAIL_DEFAULT_SENDER",
         "projectsistempakarlambung@gmail.com"
     )
+    
+    MAIL_TIMEOUT = 10
